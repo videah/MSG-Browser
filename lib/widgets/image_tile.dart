@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:msg_browser/api/models/post_list_item.dart';
+import 'package:msg_browser/pages/post_page.dart';
 import 'package:pigment/pigment.dart';
 
 class ImageTile extends StatelessWidget {
@@ -22,46 +23,65 @@ class ImageTile extends StatelessWidget {
     return Card(
       color: _borderColor,
       clipBehavior: Clip.antiAlias,
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
+      child: Stack(
         children: <Widget>[
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: Container(
-                width: 175.0,
-                child: Image.network("${post.previewUrl}", fit: BoxFit.cover),
+          Column(
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Container(
+                    width: 175.0,
+                    child: Hero(
+                      tag: post.md5,
+                      child: Image.network("${post.previewUrl}", fit: BoxFit.cover),
+                    )
+                  ),
+                )
               ),
-            )
-          ),
-          Container(
-            color: Pigment.fromString("#284a81"),
-            child: Padding(
-              padding: const EdgeInsets.all(2.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Row(
+              Container(
+                color: Pigment.fromString("#284a81"),
+                child: Padding(
+                  padding: const EdgeInsets.all(2.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
-                      post.score > 0 ? Icon(Icons.arrow_upward, size: 14.0, color: _scoreColor,) : post.score < 0 ? Icon(Icons.arrow_downward, size: 14.0, color: _scoreColor,) : Icon(Icons.linear_scale, size: 14.0, color: _scoreColor,),
+                      Row(
+                        children: <Widget>[
+                          post.score > 0 ? Icon(Icons.arrow_upward, size: 14.0, color: _scoreColor,) : post.score < 0 ? Icon(Icons.arrow_downward, size: 14.0, color: _scoreColor,) : Icon(Icons.linear_scale, size: 14.0, color: _scoreColor,),
+                          Text(
+                            " ${post.score}",
+                            style: TextStyle(color: _scoreColor),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: <Widget>[
+                          Icon(Icons.favorite, size: 14.0,),
+                          Text(" ${post.favCount}"),
+                        ],
+                      ),
+                      Text("C0"),
                       Text(
-                        " ${post.score}",
-                        style: TextStyle(color: _scoreColor),
+                        "${post.rating.toUpperCase()}",
+                        style: TextStyle(color: _ratingColor),
                       ),
                     ],
                   ),
-                  Row(
-                    children: <Widget>[
-                      Icon(Icons.favorite, size: 14.0,),
-                      Text(" ${post.favCount}"),
-                    ],
-                  ),
-                  Text("C0"),
-                  Text(
-                    "${post.rating.toUpperCase()}",
-                    style: TextStyle(color: _ratingColor),
-                  ),
-                ],
+                ),
+              ),
+            ],
+          ),
+          Positioned.fill(
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => PostPage(post: post,))
+                  );
+                },
               ),
             ),
           )
