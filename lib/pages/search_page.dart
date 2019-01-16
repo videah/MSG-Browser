@@ -1,13 +1,39 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
-import 'package:msg_browser/api/api.dart';
 import 'package:msg_browser/blocs/search_bloc.dart';
 import 'package:msg_browser/widgets/image_tile.dart';
 import 'package:msg_browser/api/models/post_list_item.dart';
 
-class SearchPage extends StatelessWidget {
+class SearchPage extends StatefulWidget {
+
+  @override
+  SearchPageState createState() {
+    return new SearchPageState();
+  }
+
+}
+
+class SearchPageState extends State<SearchPage> {
+
+  SearchBar searchBar;
+
+  AppBar _buildAppBar(BuildContext context) {
+    return AppBar(
+      title: Text("e621"),
+      actions: <Widget>[
+        searchBar.getSearchAction(context)
+      ],
+    );
+  }
+
+  SearchPageState() {
+    searchBar = SearchBar(
+      inBar: true,
+      setState: setState,
+      onSubmitted: print,
+      buildDefaultAppBar: _buildAppBar
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,16 +59,7 @@ class SearchPage extends StatelessWidget {
           ],
         ),
       ),
-      appBar: AppBar(
-        title: Text("e621"),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.search),
-            onPressed: () {
-            },
-          )
-        ],
-      ),
+      appBar: searchBar.build(context),
       body: StreamBuilder<List<PostListItem>>(
         stream: SearchProvider.of(context).items,
         builder: (context, snapshot) {
