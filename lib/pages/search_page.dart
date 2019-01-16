@@ -19,24 +19,44 @@ class SearchPageState extends State<SearchPage> {
 
   AppBar _buildAppBar(BuildContext context) {
     return AppBar(
-      title: Text("e621"),
+      title: StreamBuilder<String>(
+        stream: SearchProvider.of(context).tags,
+        builder: (context, snapshot) {
+          if (!snapshot.hasData || snapshot.data.isEmpty) {
+            return Text("e621");
+          } else {
+            return Text("${snapshot.data}");
+          }
+        },
+      ),
       actions: <Widget>[
         searchBar.getSearchAction(context)
       ],
     );
   }
 
-  SearchPageState() {
+  @override
+  void initState() {
+    super.initState();
+
     searchBar = SearchBar(
-      inBar: true,
-      setState: setState,
-      onSubmitted: print,
-      buildDefaultAppBar: _buildAppBar
+        inBar: true,
+        setState: setState,
+        onSubmitted: _setTags,
+        buildDefaultAppBar: _buildAppBar
     );
+
+  }
+
+  // The search bar doesn't like the Bloc pattern very much,
+  // we have to wrap the sink in this method or it won't work.
+  _setTags(String _tags) {
+    SearchProvider.of(context).search.add(_tags);
   }
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       drawer: Drawer(
         child: ListView(
@@ -63,7 +83,7 @@ class SearchPageState extends State<SearchPage> {
       body: StreamBuilder<List<PostListItem>>(
         stream: SearchProvider.of(context).items,
         builder: (context, snapshot) {
-          if (snapshot.hasData) {
+          if (snapshot.hasData && snapshot.data.isNotEmpty) {
             var items = snapshot.data;
             return GridView.count(
               padding: EdgeInsets.all(8.0),
@@ -76,7 +96,21 @@ class SearchPageState extends State<SearchPage> {
               }),
             );
           } else {
-            return Container();
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  RotatedBox(
+                    quarterTurns: 1,
+                    child: Text(":(", style: TextStyle(fontSize: 80.0),),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(32.0),
+                    child: Text("No posts matched your search."),
+                  )
+                ],
+              )
+            );
           }
         }
       )
