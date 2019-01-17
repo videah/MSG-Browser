@@ -85,15 +85,18 @@ class SearchPageState extends State<SearchPage> {
         builder: (context, snapshot) {
           if (snapshot.hasData && snapshot.data.isNotEmpty) {
             var items = snapshot.data;
-            return GridView.count(
+            return GridView.builder(
+              itemCount: items.length,
               padding: EdgeInsets.all(8.0),
-              crossAxisCount: 2,
-              children: List.generate(items.length, (index) {
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+              ),
+              itemBuilder: (context, i) {
                 return Padding(
                   padding: const EdgeInsets.all(4.0),
-                  child: ImageTile(post: items[index],),
+                  child: ImageTile(post: items[i],),
                 );
-              }),
+              },
             );
           } else {
             return Center(
