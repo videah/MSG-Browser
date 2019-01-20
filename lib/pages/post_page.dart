@@ -72,7 +72,7 @@ class PostPageState extends State<PostPage> {
                           placeholder: Container(
                             color: Colors.black,
                           ),
-                          aspectRatio: 0.75, // TODO: calculate correct ratio
+                          aspectRatio: widget.post.width / widget.post.height,
                           autoPlay: true,
                           looping: true,
                         ),
