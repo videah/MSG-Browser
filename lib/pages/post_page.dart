@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:msg_browser/api/models/post_list_item.dart';
+import 'package:msg_browser/pages/image_viewer_page.dart';
 import 'package:pigment/pigment.dart';
 import 'package:video_player/video_player.dart';
 import 'package:chewie/chewie.dart';
@@ -48,10 +49,21 @@ class PostPageState extends State<PostPage> {
                 child: Hero(
                   tag: widget.post.md5,
                   child: widget.post.fileExt != "webm"
-                      ? TransitionToImage(
-                          image: AdvancedNetworkImage(
-                            widget.post.fileUrl,
-                            useDiskCache: true,
+                      ? GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => ImageViewerPage(
+                                      post: widget.post,
+                                    ),
+                              ),
+                            );
+                          },
+                          child: TransitionToImage(
+                            image: AdvancedNetworkImage(
+                              widget.post.fileUrl,
+                              useDiskCache: true,
+                            ),
                           ),
                         )
                       : Chewie(
@@ -66,7 +78,8 @@ class PostPageState extends State<PostPage> {
                 )),
             widget.post.description.isNotEmpty
                 ? Padding(
-                    padding: const EdgeInsets.only(left: 4.0, right: 4.0, top: 8.0),
+                    padding:
+                        const EdgeInsets.only(left: 4.0, right: 4.0, top: 8.0),
                     child: Card(
                       color: Pigment.fromString("#284a81"),
                       child: ExpansionTile(
@@ -85,7 +98,8 @@ class PostPageState extends State<PostPage> {
                   )
                 : Container(),
             Padding(
-              padding: const EdgeInsets.only(left: 4.0, right: 4.0, bottom: 4.0),
+              padding:
+                  const EdgeInsets.only(left: 4.0, right: 4.0, bottom: 4.0),
               child: Card(
                 color: Pigment.fromString("#284a81"),
                 child: ExpansionTile(
