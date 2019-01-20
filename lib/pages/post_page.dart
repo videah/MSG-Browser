@@ -3,6 +3,8 @@ import 'package:msg_browser/api/models/post_list_item.dart';
 import 'package:pigment/pigment.dart';
 import 'package:video_player/video_player.dart';
 import 'package:chewie/chewie.dart';
+import 'package:flutter_advanced_networkimage/flutter_advanced_networkimage.dart';
+import 'package:flutter_advanced_networkimage/transition_to_image.dart';
 
 class PostPage extends StatefulWidget {
   final PostListItem post;
@@ -14,7 +16,6 @@ class PostPage extends StatefulWidget {
 }
 
 class PostPageState extends State<PostPage> {
-
   VideoPlayerController _playerController;
 
   @override
@@ -47,7 +48,12 @@ class PostPageState extends State<PostPage> {
                 child: Hero(
                   tag: widget.post.md5,
                   child: widget.post.fileExt != "webm"
-                      ? Image.network("${widget.post.fileUrl}")
+                      ? TransitionToImage(
+                          image: AdvancedNetworkImage(
+                            widget.post.fileUrl,
+                            useDiskCache: true,
+                          ),
+                        )
                       : Chewie(
                           _playerController,
                           placeholder: Container(
