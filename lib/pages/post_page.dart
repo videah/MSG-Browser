@@ -64,6 +64,7 @@ class PostPageState extends State<PostPage> {
                               widget.post.fileUrl,
                               useDiskCache: true,
                             ),
+                            enableRefresh: true,
                           ),
                         )
                       : Chewie(
