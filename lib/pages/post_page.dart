@@ -66,24 +66,30 @@ class PostPageState extends State<PostPage> {
                 )),
             widget.post.description.isNotEmpty
                 ? Padding(
-                    padding: const EdgeInsets.all(4.0),
+                    padding: const EdgeInsets.only(left: 4.0, right: 4.0, top: 8.0),
                     child: Card(
                       color: Pigment.fromString("#284a81"),
-                      child: ListTile(
-                        contentPadding: EdgeInsets.all(16.0),
+                      child: ExpansionTile(
+                        initiallyExpanded: true,
                         title: Text("Description"),
-                        subtitle: Text("${widget.post.description}"),
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 8.0),
+                            child: ListTile(
+                              subtitle: Text("${widget.post.description}"),
+                            ),
+                          )
+                        ],
                       ),
                     ),
                   )
                 : Container(),
             Padding(
-              padding: const EdgeInsets.all(4.0),
+              padding: const EdgeInsets.only(left: 4.0, right: 4.0, bottom: 4.0),
               child: Card(
                 color: Pigment.fromString("#284a81"),
                 child: ExpansionTile(
                   initiallyExpanded: true,
-                  trailing: Icon(Icons.tag_faces),
                   title: Text("Tags"),
                   children: <Widget>[
                     ListTile(
