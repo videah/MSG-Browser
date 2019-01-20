@@ -8,6 +8,26 @@ class ImageTile extends StatelessWidget {
 
   const ImageTile({Key key, this.post}) : super(key: key);
 
+  Widget _tileIcon(Icon icon) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      mainAxisSize: MainAxisSize.max,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: CircleAvatar(
+            backgroundColor: Colors.white,
+            child: CircleAvatar(
+              maxRadius: 14.0,
+              child: icon,
+            ),
+            maxRadius: 15.0,
+          ),
+        )
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     Color _ratingColor = post.rating == "e"
@@ -18,7 +38,11 @@ class ImageTile extends StatelessWidget {
         ? Pigment.fromString("#3e9e49")
         : post.score < 0 ? Pigment.fromString("#e45f5f") : Colors.white;
 
-    Color _borderColor = post.hasChildren ? Pigment.fromString("#0f0") : post.parentId != null ? Pigment.fromString("#cc0") : Pigment.fromString("#284a81");
+    Color _borderColor = post.hasChildren
+        ? Pigment.fromString("#0f0")
+        : post.parentId != null
+            ? Pigment.fromString("#cc0")
+            : Pigment.fromString("#284a81");
 
     return Card(
       color: _borderColor,
@@ -35,10 +59,13 @@ class ImageTile extends StatelessWidget {
                     width: 175.0,
                     child: Hero(
                       tag: post.md5,
-                      child: Image.network("${post.previewUrl}", fit: BoxFit.cover),
-                    )
+                      child: Image.network(
+                        "${post.previewUrl}",
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   ),
-                )
+                ),
               ),
               Container(
                 color: Pigment.fromString("#284a81"),
@@ -49,7 +76,23 @@ class ImageTile extends StatelessWidget {
                     children: <Widget>[
                       Row(
                         children: <Widget>[
-                          post.score > 0 ? Icon(Icons.arrow_upward, size: 14.0, color: _scoreColor,) : post.score < 0 ? Icon(Icons.arrow_downward, size: 14.0, color: _scoreColor,) : Icon(Icons.linear_scale, size: 14.0, color: _scoreColor,),
+                          post.score > 0
+                              ? Icon(
+                                  Icons.arrow_upward,
+                                  size: 14.0,
+                                  color: _scoreColor,
+                                )
+                              : post.score < 0
+                                  ? Icon(
+                                      Icons.arrow_downward,
+                                      size: 14.0,
+                                      color: _scoreColor,
+                                    )
+                                  : Icon(
+                                      Icons.linear_scale,
+                                      size: 14.0,
+                                      color: _scoreColor,
+                                    ),
                           Text(
                             " ${post.score}",
                             style: TextStyle(color: _scoreColor),
@@ -58,7 +101,10 @@ class ImageTile extends StatelessWidget {
                       ),
                       Row(
                         children: <Widget>[
-                          Icon(Icons.favorite, size: 14.0,),
+                          Icon(
+                            Icons.favorite,
+                            size: 14.0,
+                          ),
                           Text(" ${post.favCount}"),
                         ],
                       ),
@@ -73,13 +119,33 @@ class ImageTile extends StatelessWidget {
               ),
             ],
           ),
+          post.fileExt == "webm"
+              ? _tileIcon(
+                  Icon(
+                    Icons.ondemand_video,
+                    size: 18.0,
+                  ),
+                )
+              : Container(),
+          post.fileExt == "gif"
+              ? _tileIcon(
+                  Icon(
+                    Icons.gif,
+                    size: 28.0,
+                  ),
+                )
+              : Container(),
           Positioned.fill(
             child: Material(
               color: Colors.transparent,
               child: InkWell(
                 onTap: () {
                   Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => PostPage(post: post,))
+                    MaterialPageRoute(
+                      builder: (context) => PostPage(
+                            post: post,
+                          ),
+                    ),
                   );
                 },
               ),
