@@ -6,16 +6,13 @@ import 'package:msg_browser/api/models/post_list_item.dart';
 import 'package:pigment/pigment.dart';
 
 class SearchPage extends StatefulWidget {
-
   @override
   SearchPageState createState() {
     return new SearchPageState();
   }
-
 }
 
 class SearchPageState extends State<SearchPage> {
-
   SearchBar searchBar;
 
   AppBar _buildAppBar(BuildContext context) {
@@ -30,9 +27,7 @@ class SearchPageState extends State<SearchPage> {
           }
         },
       ),
-      actions: <Widget>[
-        searchBar.getSearchAction(context)
-      ],
+      actions: <Widget>[searchBar.getSearchAction(context)],
     );
   }
 
@@ -43,8 +38,7 @@ class SearchPageState extends State<SearchPage> {
         inBar: true,
         setState: setState,
         onSubmitted: _setTags,
-        buildDefaultAppBar: _buildAppBar
-    );
+        buildDefaultAppBar: _buildAppBar);
   }
 
   // The search bar doesn't like the Bloc pattern very much,
@@ -55,7 +49,6 @@ class SearchPageState extends State<SearchPage> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       drawer: Drawer(
         child: Container(
@@ -81,18 +74,23 @@ class SearchPageState extends State<SearchPage> {
         builder: (context, snapshot) {
           if (snapshot.hasData && snapshot.data.isNotEmpty) {
             var items = snapshot.data;
-            return GridView.builder(
-              itemCount: items.length,
-              padding: EdgeInsets.all(8.0),
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
+            return RefreshIndicator(
+              onRefresh: SearchProvider.of(context).refresh,
+              child: GridView.builder(
+                itemCount: items.length,
+                padding: EdgeInsets.all(8.0),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                ),
+                itemBuilder: (context, i) {
+                  return Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: ImageTile(
+                      post: items[i],
+                    ),
+                  );
+                },
               ),
-              itemBuilder: (context, i) {
-                return Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: ImageTile(post: items[i],),
-                );
-              },
             );
           } else {
             return Center(
@@ -101,18 +99,21 @@ class SearchPageState extends State<SearchPage> {
                 children: <Widget>[
                   RotatedBox(
                     quarterTurns: 1,
-                    child: Text(":(", style: TextStyle(fontSize: 80.0),),
+                    child: Text(
+                      ":(",
+                      style: TextStyle(fontSize: 80.0),
+                    ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(32.0),
                     child: Text("No posts matched your search."),
                   )
                 ],
-              )
+              ),
             );
           }
-        }
-      )
+        },
+      ),
     );
   }
 }

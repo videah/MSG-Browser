@@ -30,6 +30,8 @@ class SearchBloc {
     _itemsSubject.add(_items);
   }
 
+  Future refresh() async => await _handleSearch(_tags);
+
   SearchBloc() {
     _searchController.stream.listen(_handleSearch);
   }
