@@ -3,6 +3,7 @@ import 'package:flutter_search_bar/flutter_search_bar.dart';
 import 'package:msg_browser/blocs/search_bloc.dart';
 import 'package:msg_browser/widgets/image_tile.dart';
 import 'package:msg_browser/api/models/post_list_item.dart';
+import 'package:pigment/pigment.dart';
 
 class SearchPage extends StatefulWidget {
 
@@ -38,14 +39,12 @@ class SearchPageState extends State<SearchPage> {
   @override
   void initState() {
     super.initState();
-
     searchBar = SearchBar(
         inBar: true,
         setState: setState,
         onSubmitted: _setTags,
         buildDefaultAppBar: _buildAppBar
     );
-
   }
 
   // The search bar doesn't like the Bloc pattern very much,
@@ -59,24 +58,21 @@ class SearchPageState extends State<SearchPage> {
 
     return Scaffold(
       drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            DrawerHeader(
-              child: Text("E621"),
-              decoration: BoxDecoration(
-                color: Colors.blue,
+        child: Container(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              DrawerHeader(
+                child: Text("E621"),
+                decoration: BoxDecoration(
+                  color: Pigment.fromString("#152f56"),
+                ),
               ),
-            ),
-            ListTile(
-              title: Text("Settings"),
-              leading: Icon(Icons.settings),
-            ),
-            ListTile(
-              title: Text("Bookmarked Tags"),
-              leading: Icon(Icons.collections_bookmark),
-            )
-          ],
+              ListTile(
+                title: Text("About"),
+              )
+            ],
+          ),
         ),
       ),
       appBar: searchBar.build(context),

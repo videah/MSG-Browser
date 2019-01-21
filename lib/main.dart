@@ -17,6 +17,7 @@ class E621App extends StatelessWidget {
           brightness: Brightness.dark,
           primaryColor: Pigment.fromString("#152f56"),
           scaffoldBackgroundColor: Pigment.fromString("#152f56"),
+          canvasColor: Pigment.fromString("#284a81"),
         )
       ),
     );
