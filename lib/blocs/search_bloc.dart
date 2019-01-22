@@ -18,10 +18,10 @@ class SearchBloc {
     return posts;
   }
 
-  _handleSearch(String tags) async {
+  _handleSearch(String tags, {bool clearPage = true}) async {
+    if (clearPage) _itemsSubject.add(null);
     noMorePages = false;
     _tags = tags;
-    _itemsSubject.add(null);
     _searchSubject.add(_tags);
 
     var response = await client.get(
@@ -53,7 +53,7 @@ class SearchBloc {
     }
   }
 
-  Future refresh() async => await _handleSearch(_tags);
+  Future refresh() async => await _handleSearch(_tags, clearPage: false);
 
   SearchBloc() {
     _searchController.stream.listen(_handleSearch);
