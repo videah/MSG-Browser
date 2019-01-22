@@ -34,87 +34,91 @@ class PostPageState extends State<PostPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Post"),
-        ),
-        body: ListView(
-          children: <Widget>[
-            Container(
-                color: Pigment.fromString("#284a81"),
-                height: widget.post.fileExt != "webm"
-                    ? widget.post.height *
-                        MediaQuery.of(context).size.width /
-                        widget.post.width
-                    : null,
-                child: Hero(
-                  tag: widget.post.md5,
-                  child: widget.post.fileExt != "webm"
-                      ? GestureDetector(
-                          onTap: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => ImageViewerPage(
-                                      post: widget.post,
-                                    ),
-                              ),
-                            );
-                          },
-                          child: TransitionToImage(
-                            image: AdvancedNetworkImage(
-                              widget.post.fileUrl,
-                              useDiskCache: true,
+      appBar: AppBar(
+        title: Text("Post"),
+      ),
+      body: ListView(
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8.0),
+            child: Container(
+              color: Pigment.fromString("#284a81"),
+              height: widget.post.fileExt != "webm"
+                  ? widget.post.height *
+                      MediaQuery.of(context).size.width /
+                      widget.post.width
+                  : null,
+              child: Hero(
+                tag: widget.post.md5,
+                child: widget.post.fileExt != "webm"
+                    ? GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => ImageViewerPage(
+                                    post: widget.post,
+                                  ),
                             ),
-                            enableRefresh: true,
+                          );
+                        },
+                        child: TransitionToImage(
+                          image: AdvancedNetworkImage(
+                            widget.post.fileUrl,
+                            useDiskCache: true,
+                          ),
+                          enableRefresh: true,
+                        ),
+                      )
+                    : Chewie(
+                        _playerController,
+                        placeholder: Container(
+                          color: Colors.black,
+                        ),
+                        aspectRatio: widget.post.width / widget.post.height,
+                        autoPlay: true,
+                        looping: true,
+                      ),
+              ),
+            ),
+          ),
+          widget.post.description.isNotEmpty
+              ? Padding(
+                  padding:
+                      const EdgeInsets.only(left: 4.0, right: 4.0, top: 4.0, bottom: 4.0),
+                  child: Card(
+                    color: Pigment.fromString("#284a81"),
+                    child: ExpansionTile(
+                      initiallyExpanded: true,
+                      title: Text("Description"),
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 8.0),
+                          child: ListTile(
+                            subtitle: Text("${widget.post.description}"),
                           ),
                         )
-                      : Chewie(
-                          _playerController,
-                          placeholder: Container(
-                            color: Colors.black,
-                          ),
-                          aspectRatio: widget.post.width / widget.post.height,
-                          autoPlay: true,
-                          looping: true,
-                        ),
-                )),
-            widget.post.description.isNotEmpty
-                ? Padding(
-                    padding:
-                        const EdgeInsets.only(left: 4.0, right: 4.0, top: 8.0),
-                    child: Card(
-                      color: Pigment.fromString("#284a81"),
-                      child: ExpansionTile(
-                        initiallyExpanded: true,
-                        title: Text("Description"),
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 8.0),
-                            child: ListTile(
-                              subtitle: Text("${widget.post.description}"),
-                            ),
-                          )
-                        ],
-                      ),
+                      ],
                     ),
+                  ),
+                )
+              : Container(),
+          Padding(
+            padding: const EdgeInsets.only(left: 4.0, right: 4.0, top: 4.0, bottom: 4.0),
+            child: Card(
+              color: Pigment.fromString("#284a81"),
+              child: ExpansionTile(
+                initiallyExpanded: true,
+                title: Text("Tags"),
+                children: <Widget>[
+                  ListTile(
+                    subtitle: Text("${widget.post.tags}"),
                   )
-                : Container(),
-            Padding(
-              padding:
-                  const EdgeInsets.only(left: 4.0, right: 4.0, bottom: 4.0),
-              child: Card(
-                color: Pigment.fromString("#284a81"),
-                child: ExpansionTile(
-                  initiallyExpanded: true,
-                  title: Text("Tags"),
-                  children: <Widget>[
-                    ListTile(
-                      subtitle: Text("${widget.post.tags}"),
-                    )
-                  ],
-                ),
+                ],
               ),
-            )
-          ],
-        ));
+            ),
+          )
+        ],
+      ),
+    );
   }
 }
