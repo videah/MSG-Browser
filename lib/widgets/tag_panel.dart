@@ -58,12 +58,14 @@ class TagTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var tagStringList = tags.map((f) => f.name).toList();
+    tagStringList.sort();
     if (tags.isNotEmpty) {
       return ListTile(
         title: Text("$title"),
         subtitle: Text(
           // TODO: Display this nicely
-          "${tags.map((f) => f.name).toList().join(", ")}",
+          "${tagStringList.join(", ")}",
           style: TextStyle(color: textColor, fontWeight: fontWeight),
         ),
       );
