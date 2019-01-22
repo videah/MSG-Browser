@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:msg_browser/api/models/post_list_item.dart';
+import 'package:msg_browser/api/models/post_tag.dart';
+import 'package:msg_browser/blocs/post_bloc.dart';
 import 'package:msg_browser/pages/image_viewer_page.dart';
 import 'package:msg_browser/widgets/post_action_button.dart';
+import 'package:msg_browser/widgets/tag_panel.dart';
 import 'package:pigment/pigment.dart';
 import 'package:video_player/video_player.dart';
 import 'package:chewie/chewie.dart';
@@ -34,8 +37,6 @@ class PostPageState extends State<PostPage> {
 
   @override
   Widget build(BuildContext context) {
-    List<String> tagList = widget.post.tags.split(" ");
-
     return Scaffold(
       appBar: AppBar(
         title: Text("Post"),
@@ -108,11 +109,19 @@ class PostPageState extends State<PostPage> {
           Card(
             color: Pigment.fromString("#284a81"),
             child: ExpansionTile(
-              initiallyExpanded: true,
               title: Text("Tags"),
               children: <Widget>[
-                ListTile(
-                  subtitle: Text("$tagList"),
+                StreamBuilder<List<PostTag>>(
+                  stream: PostProvider.of(context).tags,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return TagPanel(snapshot.data);
+                    } else {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                  },
                 )
               ],
             ),
