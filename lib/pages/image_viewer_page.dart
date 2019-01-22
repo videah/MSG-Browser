@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_advanced_networkimage/transition_to_image.dart';
 import 'package:flutter_advanced_networkimage/flutter_advanced_networkimage.dart';
 import 'package:msg_browser/api/models/post_list_item.dart';
+import 'package:msg_browser/widgets/post_action_button.dart';
 import 'package:photo_view/photo_view.dart';
 
 class ImageViewerPage extends StatelessWidget {
@@ -16,6 +17,11 @@ class ImageViewerPage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: Text("Image"),
+        actions: <Widget>[
+          PostActionButton(
+            post: post,
+          )
+        ],
       ),
       body: Center(
         child: PhotoView.customChild(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:msg_browser/api/models/post_list_item.dart';
 import 'package:msg_browser/pages/image_viewer_page.dart';
+import 'package:msg_browser/widgets/post_action_button.dart';
 import 'package:pigment/pigment.dart';
 import 'package:video_player/video_player.dart';
 import 'package:chewie/chewie.dart';
@@ -36,6 +37,11 @@ class PostPageState extends State<PostPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Post"),
+        actions: <Widget>[
+          PostActionButton(
+            post: widget.post,
+          )
+        ],
       ),
       body: ListView(
         children: <Widget>[
