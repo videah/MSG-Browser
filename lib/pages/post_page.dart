@@ -34,6 +34,9 @@ class PostPageState extends State<PostPage> {
 
   @override
   Widget build(BuildContext context) {
+
+    List<String> tagList = widget.post.tags.split(" ");
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Post"),
@@ -46,7 +49,7 @@ class PostPageState extends State<PostPage> {
       body: ListView(
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.only(bottom: 8.0),
+            padding: const EdgeInsets.only(bottom: 4.0),
             child: Container(
               color: Pigment.fromString("#284a81"),
               height: widget.post.fileExt != "webm"
@@ -88,38 +91,30 @@ class PostPageState extends State<PostPage> {
             ),
           ),
           widget.post.description.isNotEmpty
-              ? Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: Card(
-                    color: Pigment.fromString("#284a81"),
-                    child: ExpansionTile(
-                      initiallyExpanded: true,
-                      title: Text("Description"),
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 8.0),
-                          child: ListTile(
-                            subtitle: Text("${widget.post.description}"),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                )
+              ? Card(
+                color: Pigment.fromString("#284a81"),
+                child: ExpansionTile(
+                  initiallyExpanded: true,
+                  title: Text("Description"),
+                  children: <Widget>[
+                    Divider(),
+                    ListTile(
+                      title: Text("${widget.post.description}"),
+                    )
+                  ],
+                ),
+              )
               : Container(),
-          Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: Card(
-              color: Pigment.fromString("#284a81"),
-              child: ExpansionTile(
-                initiallyExpanded: true,
-                title: Text("Tags"),
-                children: <Widget>[
-                  ListTile(
-                    subtitle: Text("${widget.post.tags}"),
-                  )
-                ],
-              ),
+          Card(
+            color: Pigment.fromString("#284a81"),
+            child: ExpansionTile(
+              initiallyExpanded: true,
+              title: Text("Tags"),
+              children: <Widget>[
+                ListTile(
+                  subtitle: Text("$tagList"),
+                )
+              ],
             ),
           )
         ],
