@@ -3,7 +3,6 @@ import 'package:msg_browser/api/models/post_tag.dart';
 import 'package:pigment/pigment.dart';
 
 class TagPanel extends StatelessWidget {
-
   List<PostTag> _generalTags;
   List<PostTag> _copyrightTags;
   List<PostTag> _characterTags;
@@ -23,15 +22,18 @@ class TagPanel extends StatelessWidget {
         TagTile(
           title: "Character",
           textColor: Pigment.fromString("#0a0"),
+          fontWeight: FontWeight.bold,
           tags: _characterTags,
         ),
         TagTile(
           title: "Copyright",
           textColor: Pigment.fromString("#d0d"),
+          fontWeight: FontWeight.bold,
           tags: _copyrightTags,
         ),
         TagTile(
           title: "Species",
+          fontWeight: FontWeight.bold,
           textColor: Pigment.fromString("#ed5d1f"),
           tags: _speciesTags,
         ),
@@ -48,26 +50,25 @@ class TagTile extends StatelessWidget {
   final Color textColor;
   final String title;
   final List<PostTag> tags;
+  final FontWeight fontWeight;
 
-  const TagTile({Key key, this.textColor, this.title, this.tags})
+  const TagTile(
+      {Key key, this.textColor, this.title, this.tags, this.fontWeight})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return tags.isNotEmpty
-        ? ExpansionTile(
-            initiallyExpanded: true,
-            title: Text("$title"),
-            children: <Widget>[
-              ListTile(
-                title: Text(
-                  // TODO: Display this nicely
-                  "${tags.map((f) => f.name).toList()}",
-                  style: TextStyle(color: textColor),
-                ),
-              )
-            ],
-          )
-        : Container();
+    if (tags.isNotEmpty) {
+      return ListTile(
+        title: Text("$title"),
+        subtitle: Text(
+          // TODO: Display this nicely
+          "${tags.map((f) => f.name).toList().join(", ")}",
+          style: TextStyle(color: textColor, fontWeight: fontWeight),
+        ),
+      );
+    } else {
+      return Container();
+    }
   }
 }
