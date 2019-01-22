@@ -58,7 +58,7 @@ class ImageTile extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(4.0),
                   child: Container(
-                    width: 175.0,
+                    width: post.width.toDouble(),
                     color: Pigment.fromString("#284a81"),
                     child: Hero(
                       tag: post.md5,

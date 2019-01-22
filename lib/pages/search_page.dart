@@ -49,6 +49,7 @@ class SearchPageState extends State<SearchPage> {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       drawer: Drawer(
         child: Container(
@@ -79,8 +80,8 @@ class SearchPageState extends State<SearchPage> {
               child: GridView.builder(
                 itemCount: items.length,
                 padding: EdgeInsets.all(8.0),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: screenWidth ~/ 175,
                 ),
                 itemBuilder: (context, i) {
                   return Padding(
