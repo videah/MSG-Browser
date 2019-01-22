@@ -34,7 +34,6 @@ class PostPageState extends State<PostPage> {
 
   @override
   Widget build(BuildContext context) {
-
     List<String> tagList = widget.post.tags.split(" ");
 
     return Scaffold(
@@ -86,24 +85,25 @@ class PostPageState extends State<PostPage> {
                         aspectRatio: widget.post.width / widget.post.height,
                         autoPlay: true,
                         looping: true,
+                        autoInitialize: true,
                       ),
               ),
             ),
           ),
           widget.post.description.isNotEmpty
               ? Card(
-                color: Pigment.fromString("#284a81"),
-                child: ExpansionTile(
-                  initiallyExpanded: true,
-                  title: Text("Description"),
-                  children: <Widget>[
-                    Divider(),
-                    ListTile(
-                      title: Text("${widget.post.description}"),
-                    )
-                  ],
-                ),
-              )
+                  color: Pigment.fromString("#284a81"),
+                  child: ExpansionTile(
+                    initiallyExpanded: true,
+                    title: Text("Description"),
+                    children: <Widget>[
+                      Divider(),
+                      ListTile(
+                        title: Text("${widget.post.description}"),
+                      )
+                    ],
+                  ),
+                )
               : Container(),
           Card(
             color: Pigment.fromString("#284a81"),

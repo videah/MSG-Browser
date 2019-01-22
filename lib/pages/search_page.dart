@@ -78,18 +78,25 @@ class SearchPageState extends State<SearchPage> {
             return RefreshIndicator(
               onRefresh: SearchProvider.of(context).refresh,
               child: GridView.builder(
-                itemCount: items.length,
+                itemCount: items.length + 1,
                 padding: EdgeInsets.all(8.0),
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: screenWidth ~/ 175,
                 ),
                 itemBuilder: (context, i) {
-                  return Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: ImageTile(
-                      post: items[i],
-                    ),
-                  );
+                  if (i < items.length) {
+                    return Padding(
+                      padding: const EdgeInsets.all(4.0),
+                      child: ImageTile(
+                        post: items[i],
+                      ),
+                    );
+                  } else {
+                    SearchProvider.of(context).loadMore.add(items.last.id);
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
                 },
               ),
             );

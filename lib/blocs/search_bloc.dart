@@ -20,8 +20,9 @@ class SearchBloc {
   _handleSearch(String tags) async {
     _tags = tags;
     _searchSubject.add(_tags);
-    var response =
-        await client.get("https://e621.net/post/index.json?tags=$tags");
+    var response = await client.get(
+      "https://e621.net/post/index.json?tags=$_tags",
+    );
     var decoded = json.decode(response.body);
 
     List<PostListItem> posts =
@@ -30,10 +31,24 @@ class SearchBloc {
     _itemsSubject.add(_items);
   }
 
+  _handleLoadMore(int id) async {
+    var response = await client.get(
+      "https://e621.net/post/index.json?tags=$_tags&before_id=$id",
+    );
+    print("https://e621.net/post/index.json?tags=$_tags&before_id=$id");
+    var decoded = json.decode(response.body);
+
+    List<PostListItem> posts =
+    (decoded as List).map((i) => PostListItem.fromJson(i)).toList();
+    _items.addAll(_stripFlashPosts(posts));
+    _itemsSubject.add(_items);
+  }
+
   Future refresh() async => await _handleSearch(_tags);
 
   SearchBloc() {
     _searchController.stream.listen(_handleSearch);
+    _loadMoreController.stream.listen(_handleLoadMore);
   }
 
   void _grabInitialData() async {
@@ -53,10 +68,14 @@ class SearchBloc {
   final _searchController = StreamController<String>();
   Sink<String> get search => _searchController.sink;
 
+  final _loadMoreController = StreamController<int>();
+  Sink<int> get loadMore => _loadMoreController.sink;
+
   void dispose() {
     _itemsSubject.close();
     _searchSubject.close();
     _searchController.close();
+    _loadMoreController.close();
   }
 }
 
