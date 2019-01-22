@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_advanced_networkimage/zoomable_widget.dart';
 import 'package:flutter_advanced_networkimage/transition_to_image.dart';
 import 'package:flutter_advanced_networkimage/flutter_advanced_networkimage.dart';
 import 'package:msg_browser/api/models/post_list_item.dart';
+import 'package:photo_view/photo_view.dart';
 
 class ImageViewerPage extends StatelessWidget {
   final PostListItem post;
@@ -18,7 +18,13 @@ class ImageViewerPage extends StatelessWidget {
         title: Text("Image"),
       ),
       body: Center(
-        child: ZoomableWidget(
+        child: PhotoView.customChild(
+          childSize: Size(
+            MediaQuery.of(context).size.width,
+            post.height * MediaQuery.of(context).size.width / post.width,
+          ),
+          minScale: 1.0,
+          maxScale: 8.0,
           child: Hero(
             tag: post.md5,
             child: TransitionToImage(
@@ -28,9 +34,6 @@ class ImageViewerPage extends StatelessWidget {
               ),
             ),
           ),
-          panLimit: 1.2,
-          maxScale: 5.0,
-          autoCenter: true,
         ),
       ),
     );
