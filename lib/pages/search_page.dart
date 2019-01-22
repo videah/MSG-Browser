@@ -50,6 +50,7 @@ class SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
+    SearchBloc searchProvider = SearchProvider.of(context);
     return Scaffold(
       drawer: Drawer(
         child: Container(
@@ -71,12 +72,12 @@ class SearchPageState extends State<SearchPage> {
       ),
       appBar: searchBar.build(context),
       body: StreamBuilder<List<PostListItem>>(
-        stream: SearchProvider.of(context).items,
+        stream: searchProvider.items,
         builder: (context, snapshot) {
           if (snapshot.hasData && snapshot.data.isNotEmpty) {
             var items = snapshot.data;
             return RefreshIndicator(
-              onRefresh: SearchProvider.of(context).refresh,
+              onRefresh: searchProvider.refresh,
               child: GridView.builder(
                 itemCount: items.length + 1,
                 padding: EdgeInsets.all(8.0),
@@ -91,8 +92,10 @@ class SearchPageState extends State<SearchPage> {
                         post: items[i],
                       ),
                     );
+                  } else if (searchProvider.noMorePages) {
+                    return Container();
                   } else {
-                    SearchProvider.of(context).loadMore.add(items.last.id);
+                    searchProvider.loadMore.add(items.last.id);
                     return Center(
                       child: CircularProgressIndicator(),
                     );

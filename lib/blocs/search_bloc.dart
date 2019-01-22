@@ -9,6 +9,7 @@ class SearchBloc {
   final client = E621Client();
   List<PostListItem> _items;
   String _tags;
+  bool noMorePages = false;
 
   // Flash is a dead meme.
   // TODO: maybe do this in the search query instead
@@ -18,8 +19,11 @@ class SearchBloc {
   }
 
   _handleSearch(String tags) async {
+    noMorePages = false;
     _tags = tags;
+    _itemsSubject.add(null);
     _searchSubject.add(_tags);
+
     var response = await client.get(
       "https://e621.net/post/index.json?tags=$_tags",
     );
@@ -32,16 +36,21 @@ class SearchBloc {
   }
 
   _handleLoadMore(int id) async {
-    var response = await client.get(
-      "https://e621.net/post/index.json?tags=$_tags&before_id=$id",
-    );
-    print("https://e621.net/post/index.json?tags=$_tags&before_id=$id");
-    var decoded = json.decode(response.body);
+    if (!noMorePages) {
+      var response = await client.get(
+        "https://e621.net/post/index.json?tags=$_tags&before_id=$id",
+      );
+      print("https://e621.net/post/index.json?tags=$_tags&before_id=$id");
+      var decoded = json.decode(response.body);
 
-    List<PostListItem> posts =
-    (decoded as List).map((i) => PostListItem.fromJson(i)).toList();
-    _items.addAll(_stripFlashPosts(posts));
-    _itemsSubject.add(_items);
+      List<PostListItem> posts =
+      (decoded as List).map((i) => PostListItem.fromJson(i)).toList();
+      _items.addAll(_stripFlashPosts(posts));
+
+      // If there's nothing then we've hit a dead end and should stop loading.
+      noMorePages = posts.isEmpty;
+      _itemsSubject.add(_items);
+    }
   }
 
   Future refresh() async => await _handleSearch(_tags);
