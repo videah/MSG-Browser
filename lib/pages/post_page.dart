@@ -72,7 +72,7 @@ class PostPageState extends State<PostPage> {
                         },
                         child: TransitionToImage(
                           image: AdvancedNetworkImage(
-                            widget.post.fileUrl,
+                            widget.post.sampleUrl,
                             useDiskCache: true,
                           ),
                           enableRefresh: true,

@@ -35,7 +35,7 @@ class ImageViewerPage extends StatelessWidget {
             tag: post.md5,
             child: TransitionToImage(
               image: AdvancedNetworkImage(
-                post.fileUrl,
+                post.sampleUrl,
                 useDiskCache: true,
               ),
             ),
