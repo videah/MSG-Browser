@@ -8,8 +8,8 @@ import 'package:msg_browser/widgets/tag_panel.dart';
 import 'package:pigment/pigment.dart';
 import 'package:video_player/video_player.dart';
 import 'package:chewie/chewie.dart';
-import 'package:flutter_advanced_networkimage/flutter_advanced_networkimage.dart';
-import 'package:flutter_advanced_networkimage/transition_to_image.dart';
+import 'package:flutter_advanced_networkimage/transition.dart';
+import 'package:flutter_advanced_networkimage/provider.dart';
 
 class PostPage extends StatefulWidget {
   final PostListItem post;
@@ -22,10 +22,17 @@ class PostPage extends StatefulWidget {
 
 class PostPageState extends State<PostPage> {
   VideoPlayerController _playerController;
+  ChewieController _chewieController;
 
   @override
   void initState() {
     _playerController = VideoPlayerController.network("${widget.post.fileUrl}");
+    _chewieController = ChewieController(
+      videoPlayerController: _playerController,
+      aspectRatio: widget.post.width / widget.post.height,
+      autoPlay: true,
+      looping: false,
+    );
     super.initState();
   }
 
@@ -78,16 +85,7 @@ class PostPageState extends State<PostPage> {
                           enableRefresh: true,
                         ),
                       )
-                    : Chewie(
-                        _playerController,
-                        placeholder: Container(
-                          color: Colors.black,
-                        ),
-                        aspectRatio: widget.post.width / widget.post.height,
-                        autoPlay: true,
-                        looping: true,
-                        autoInitialize: true,
-                      ),
+                    : Chewie(controller: _chewieController),
               ),
             ),
           ),

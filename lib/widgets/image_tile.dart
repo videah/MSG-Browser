@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_advanced_networkimage/flutter_advanced_networkimage.dart';
-import 'package:flutter_advanced_networkimage/transition_to_image.dart';
+import 'package:flutter_advanced_networkimage/transition.dart';
+import 'package:flutter_advanced_networkimage/provider.dart';
 import 'package:msg_browser/api/models/post_list_item.dart';
 import 'package:msg_browser/blocs/post_bloc.dart';
 import 'package:msg_browser/pages/post_page.dart';
