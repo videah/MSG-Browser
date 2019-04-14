@@ -36,7 +36,9 @@ class SettingsPage extends StatelessWidget {
                       actions: <Widget>[
                         FlatButton(
                           child: Text("CANCEL"),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
                         ),
                         FlatButton(
                           child: Text("CLEAR"),

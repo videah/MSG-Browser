@@ -3,7 +3,7 @@ import 'package:frideos_core/frideos_core.dart';
 import 'package:generic_bloc_provider/generic_bloc_provider.dart';
 
 class SettingsBloc extends Bloc {
-  final cacheSize = StreamedValue<String>();
+  final cacheSize = StreamedValue<double>();
 
   SettingsBloc() {
     _refreshCacheSize();
@@ -16,7 +16,7 @@ class SettingsBloc extends Bloc {
 
   Future _refreshCacheSize() async {
     double size = await DiskCache().cacheSize() / 1000 / 1000;
-    cacheSize.value = size.toStringAsPrecision(4);
+    cacheSize.value = size.roundToDouble();
   }
 
   @override
