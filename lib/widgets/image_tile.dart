@@ -4,13 +4,15 @@ import 'package:flutter_advanced_networkimage/provider.dart';
 import 'package:generic_bloc_provider/generic_bloc_provider.dart';
 import 'package:msg_browser/api/models/post_list_item.dart';
 import 'package:msg_browser/blocs/post_bloc.dart';
+import 'package:msg_browser/pages/image_viewer_page.dart';
 import 'package:msg_browser/pages/post_page.dart';
 import 'package:pigment/pigment.dart';
 
 class ImageTile extends StatelessWidget {
   final PostListItem post;
+  final bool idgaf;
 
-  const ImageTile({Key key, this.post}) : super(key: key);
+  const ImageTile({Key key, this.post, this.idgaf = false}) : super(key: key);
 
   Widget _tileIcon(Icon icon) {
     return Row(
@@ -148,18 +150,28 @@ class ImageTile extends StatelessWidget {
               color: Colors.transparent,
               child: InkWell(
                 onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return BlocProvider(
-                          bloc: PostBloc(post),
-                          child: PostPage(
-                            post: post,
-                          ),
-                        );
-                      }
-                    ),
-                  );
+                  if (!idgaf) {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return BlocProvider(
+                            bloc: PostBloc(post),
+                            child: PostPage(
+                              post: post,
+                            ),
+                          );
+                        },
+                      ),
+                    );
+                  } else {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return ImageViewerPage(post: post);
+                        },
+                      ),
+                    );
+                  }
                 },
               ),
             ),
