@@ -40,11 +40,6 @@ class _PostContentVideoState extends State<PostContentVideo> {
   Widget build(BuildContext context) {
     return Container(
       color: Pigment.fromString("#284a81"),
-      height: widget.post.fileExt != "webm"
-          ? widget.post.height *
-              MediaQuery.of(context).size.width /
-              widget.post.width
-          : null,
       child: Hero(
         tag: widget.post.md5,
         child: Chewie(controller: _chewieController),
