@@ -2,16 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 import 'package:generic_bloc_provider/generic_bloc_provider.dart';
 import 'package:msg_browser/blocs/search_bloc.dart';
+import 'package:msg_browser/widgets/e621_drawer.dart';
 import 'package:msg_browser/widgets/error_message.dart';
 import 'package:msg_browser/widgets/image_tile.dart';
 import 'package:msg_browser/api/models/post_list_item.dart';
-import 'package:pigment/pigment.dart';
 
 class SearchPage extends StatefulWidget {
   @override
-  SearchPageState createState() {
-    return new SearchPageState();
-  }
+  SearchPageState createState() => SearchPageState();
 }
 
 class SearchPageState extends State<SearchPage> {
@@ -54,24 +52,7 @@ class SearchPageState extends State<SearchPage> {
     double screenWidth = MediaQuery.of(context).size.width;
     SearchBloc searchProvider = BlocProvider.of<SearchBloc>(context);
     return Scaffold(
-      drawer: Drawer(
-        child: Container(
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: <Widget>[
-              DrawerHeader(
-                child: Text("E621"),
-                decoration: BoxDecoration(
-                  color: Pigment.fromString("#152f56"),
-                ),
-              ),
-              ListTile(
-                title: Text("About"),
-              )
-            ],
-          ),
-        ),
-      ),
+      drawer: E621Drawer(),
       appBar: searchBar.build(context),
       body: StreamBuilder<List<PostListItem>>(
         stream: searchProvider.items,
