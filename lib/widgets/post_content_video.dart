@@ -40,10 +40,9 @@ class _PostContentVideoState extends State<PostContentVideo> {
   Widget build(BuildContext context) {
     return Container(
       color: Pigment.fromString("#284a81"),
-      child: Hero(
-        tag: widget.post.md5,
-        child: Chewie(controller: _chewieController),
-      ),
+      // TODO: Hero tags are broken on Chewie, put one here
+      // when it gets fixed.
+      child: Chewie(controller: _chewieController),
     );
   }
 }
