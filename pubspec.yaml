@@ -25,6 +25,8 @@ dependencies:
   flutter_advanced_networkimage: ^0.4.15
   generic_bloc_provider: ^1.0.8
   frideos: ^0.6.1
+  smart_text_view: ^0.1.0
+  url_launcher: ^5.0.2
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

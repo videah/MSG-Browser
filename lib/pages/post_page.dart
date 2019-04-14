@@ -7,6 +7,8 @@ import 'package:msg_browser/widgets/post_action_button.dart';
 import 'package:msg_browser/widgets/post_content_image.dart';
 import 'package:msg_browser/widgets/post_content_video.dart';
 import 'package:msg_browser/widgets/tag_panel.dart';
+import 'package:smart_text_view/smart_text_view.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:pigment/pigment.dart';
 
 class PostPage extends StatelessWidget {
@@ -42,7 +44,10 @@ class PostPage extends StatelessWidget {
                     children: <Widget>[
                       Divider(),
                       ListTile(
-                        title: Text("${post.description}"),
+                        title: SmartText(
+                          text: post.description,
+                          onOpen: (url) => launch(url),
+                        )
                       )
                     ],
                   ),
