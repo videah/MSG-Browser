@@ -36,7 +36,7 @@ class E621Drawer extends StatelessWidget {
             ),
             AboutListTile(
               icon: Icon(Icons.info),
-              applicationName: "MSG-Browser",
+              applicationName: "SeaSalt",
               applicationVersion: "0.1",
               applicationIcon: Text("🐶", style: TextStyle(fontSize: 38.0),),
               aboutBoxChildren: <Widget>[

@@ -1,4 +1,4 @@
-# msg_browser
+# SeaSalt
 
 Browsing app for *that* image board site.
 
