@@ -18,24 +18,32 @@ class SearchBloc extends Bloc {
     return posts;
   }
 
-  _handleSearch(String tags, {bool clearPage = true}) async {
-    if (clearPage) _itemsSubject.add(null);
-    noMorePages = false;
-    _tags = tags;
-    _searchSubject.add(_tags);
+  Future _handleSearch(String tags, {bool clearPage = true}) async {
+    try {
+      if (clearPage) _itemsSubject.add(null);
+      noMorePages = false;
+      _tags = tags;
+      _searchSubject.add(_tags);
 
-    var response = await client.get(
-      "https://e621.net/post/index.json?tags=$_tags",
-    );
-    var decoded = json.decode(response.body);
+      var response = await client.get(
+        "https://e621.net/post/index.json?tags=$_tags",
+      );
+      var decoded = json.decode(response.body);
 
-    List<PostListItem> posts =
-        (decoded as List).map((i) => PostListItem.fromJson(i)).toList();
-    _items = _stripFlashPosts(posts);
-    _itemsSubject.add(_items);
+      List<PostListItem> posts =
+      (decoded as List).map((i) => PostListItem.fromJson(i)).toList();
+      _items = _stripFlashPosts(posts);
+      if (_items.isEmpty) {
+        _itemsSubject.addError("No posts matched your search.");
+      } else {
+        _itemsSubject.add(_items);
+      }
+    } catch(e) {
+      _itemsSubject.addError("Unknown Error");
+    }
   }
 
-  _handleLoadMore(int id) async {
+  Future _handleLoadMore(int id) async {
     if (!noMorePages) {
       var response = await client.get(
         "https://e621.net/post/index.json?tags=$_tags&before_id=$id",

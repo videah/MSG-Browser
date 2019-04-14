@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
 import 'package:generic_bloc_provider/generic_bloc_provider.dart';
 import 'package:msg_browser/blocs/search_bloc.dart';
+import 'package:msg_browser/widgets/error_message.dart';
 import 'package:msg_browser/widgets/image_tile.dart';
 import 'package:msg_browser/api/models/post_list_item.dart';
 import 'package:pigment/pigment.dart';
@@ -75,55 +76,38 @@ class SearchPageState extends State<SearchPage> {
       body: StreamBuilder<List<PostListItem>>(
         stream: searchProvider.items,
         builder: (context, snapshot) {
-          if (snapshot.hasData && snapshot.data.isNotEmpty) {
-            var items = snapshot.data;
-            return RefreshIndicator(
-              onRefresh: searchProvider.refresh,
-              child: GridView.builder(
-                itemCount: items.length + 1,
-                padding: EdgeInsets.all(8.0),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: screenWidth ~/ 175,
-                ),
-                itemBuilder: (context, i) {
-                  if (i < items.length) {
-                    return Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: ImageTile(
-                        post: items[i],
-                      ),
-                    );
-                  } else if (searchProvider.noMorePages) {
-                    return Container();
-                  } else {
-                    searchProvider.loadMore.add(items.last.id);
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                },
+          if (snapshot.hasError) return ErrorMessage(error: snapshot.error);
+          if (!snapshot.hasData) return Center(
+            child: CircularProgressIndicator(),
+          );
+          var items = snapshot.data;
+          return RefreshIndicator(
+            onRefresh: searchProvider.refresh,
+            child: GridView.builder(
+              itemCount: items.length + 1,
+              padding: EdgeInsets.all(8.0),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: screenWidth ~/ 175,
               ),
-            );
-          } else {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  RotatedBox(
-                    quarterTurns: 1,
-                    child: Text(
-                      ":(",
-                      style: TextStyle(fontSize: 80.0),
+              itemBuilder: (context, i) {
+                if (i < items.length) {
+                  return Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: ImageTile(
+                      post: items[i],
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(32.0),
-                    child: Text("No posts matched your search."),
-                  )
-                ],
-              ),
-            );
-          }
+                  );
+                } else if (searchProvider.noMorePages) {
+                  return Container();
+                } else {
+                  searchProvider.loadMore.add(items.last.id);
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+              },
+            ),
+          );
         },
       ),
     );
