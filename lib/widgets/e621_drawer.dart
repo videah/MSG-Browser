@@ -29,10 +29,28 @@ class E621Drawer extends StatelessWidget {
                         bloc: SettingsBloc(),
                         child: SettingsPage(),
                       );
-                    }
+                    },
                   ),
                 );
               },
+            ),
+            AboutListTile(
+              icon: Icon(Icons.info),
+              applicationName: "MSG-Browser",
+              applicationVersion: "0.1",
+              applicationIcon: Text("🐶", style: TextStyle(fontSize: 38.0),),
+              aboutBoxChildren: <Widget>[
+                RichText(
+                  text: TextSpan(
+                    text: "Browsing app for ",
+                    style: DefaultTextStyle.of(context).style,
+                    children: <TextSpan>[
+                      TextSpan(text: "that", style: TextStyle(fontStyle: FontStyle.italic)),
+                      TextSpan(text: " image board site."),
+                    ],
+                  ),
+                ),
+              ],
             )
           ],
         ),
