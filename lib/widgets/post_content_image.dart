@@ -18,11 +18,11 @@ class PostContentImage extends StatelessWidget {
     return Container(
       color: Pigment.fromString("#284a81"),
       height: height,
-      child: Stack(
-        children: <Widget>[
-          Hero(
-            tag: post.md5,
-            child: TransitionToImage(
+      child: Hero(
+        tag: post.md5,
+        child: Stack(
+          children: <Widget>[
+            TransitionToImage(
               fit: BoxFit.cover,
               height: height,
               enableRefresh: true,
@@ -31,33 +31,33 @@ class PostContentImage extends StatelessWidget {
                 useDiskCache: true,
               ),
             ),
-          ),
-          TransitionToImage(
-            fit: BoxFit.cover,
-            height: height,
-            enableRefresh: true,
-            image: AdvancedNetworkImage(
-              post.sampleUrl,
-              useDiskCache: true,
-            ),
-          ),
-          Positioned.fill(
-            child: Material(
-              color: Colors.transparent,
-              child: InkWell(
-                onTap: () {
-                  if (!isViewingImage) {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => ImageViewerPage(post: post),
-                      ),
-                    );
-                  }
-                },
+            TransitionToImage(
+              fit: BoxFit.cover,
+              height: height,
+              enableRefresh: true,
+              image: AdvancedNetworkImage(
+                post.sampleUrl,
+                useDiskCache: true,
               ),
             ),
-          )
-        ],
+            Positioned.fill(
+              child: Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  onTap: () {
+                    if (!isViewingImage) {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => ImageViewerPage(post: post),
+                        ),
+                      );
+                    }
+                  },
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
