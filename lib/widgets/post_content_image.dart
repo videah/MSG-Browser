@@ -33,6 +33,7 @@ class PostContentImage extends StatelessWidget {
             ),
             TransitionToImage(
               fit: BoxFit.cover,
+              height: height,
               enableRefresh: true,
               image: AdvancedNetworkImage(
                 post.sampleUrl,

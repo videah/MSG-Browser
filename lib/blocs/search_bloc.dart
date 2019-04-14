@@ -44,12 +44,13 @@ class SearchBloc {
       var decoded = json.decode(response.body);
 
       List<PostListItem> posts =
-      (decoded as List).map((i) => PostListItem.fromJson(i)).toList();
-      _items.addAll(_stripFlashPosts(posts));
-
+          (decoded as List).map((i) => PostListItem.fromJson(i)).toList();
       // If there's nothing then we've hit a dead end and should stop loading.
-      noMorePages = posts.isEmpty;
-      _itemsSubject.add(_items);
+      noMorePages = posts.isEmpty ?? true;
+      if (!noMorePages) {
+        _items.addAll(_stripFlashPosts(posts));
+        _itemsSubject.add(_items);
+      }
     }
   }
 
@@ -58,14 +59,6 @@ class SearchBloc {
   SearchBloc() {
     _searchController.stream.listen(_handleSearch);
     _loadMoreController.stream.listen(_handleLoadMore);
-  }
-
-  void _grabInitialData() async {
-    var response =
-        await client.get("https://e621.net/post/index.json?limit=10");
-    var decoded = json.decode(response.body);
-    _items = (decoded as List).map((i) => PostListItem.fromJson(i)).toList();
-    _itemsSubject.add(_items);
   }
 
   final _itemsSubject = BehaviorSubject<List<PostListItem>>();
