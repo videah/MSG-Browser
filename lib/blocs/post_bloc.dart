@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:flutter/material.dart';
 import 'package:msg_browser/api/api.dart';
 import 'package:msg_browser/api/models/post_list_item.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:msg_browser/api/models/post_tag.dart';
+import 'package:generic_bloc_provider/generic_bloc_provider.dart';
 
-class PostBloc {
+class PostBloc extends Bloc {
   final client = E621Client();
   List<PostTag> _tags;
 
@@ -29,20 +29,4 @@ class PostBloc {
   void dispose() {
     _tagSubject.close();
   }
-}
-
-class PostProvider extends InheritedWidget {
-  final PostBloc bloc;
-
-  PostProvider({
-    Key key,
-    @required this.bloc,
-    Widget child,
-  }) : super(key: key, child: child);
-
-  @override
-  bool updateShouldNotify(InheritedWidget oldWidget) => true;
-
-  static PostBloc of(BuildContext context) =>
-      (context.inheritFromWidgetOfExactType(PostProvider) as PostProvider).bloc;
 }

@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:flutter/material.dart';
+import 'package:generic_bloc_provider/generic_bloc_provider.dart';
 import 'package:msg_browser/api/api.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:msg_browser/api/models/post_list_item.dart';
 
-class SearchBloc {
+class SearchBloc extends Bloc {
   final client = E621Client();
   List<PostListItem> _items;
   String _tags;
@@ -79,21 +79,4 @@ class SearchBloc {
     _searchController.close();
     _loadMoreController.close();
   }
-}
-
-class SearchProvider extends InheritedWidget {
-  final SearchBloc bloc;
-
-  SearchProvider({
-    Key key,
-    @required this.bloc,
-    Widget child,
-  }) : super(key: key, child: child);
-
-  @override
-  bool updateShouldNotify(InheritedWidget oldWidget) => true;
-
-  static SearchBloc of(BuildContext context) =>
-      (context.inheritFromWidgetOfExactType(SearchProvider) as SearchProvider)
-          .bloc;
 }

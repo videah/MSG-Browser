@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_search_bar/flutter_search_bar.dart';
+import 'package:generic_bloc_provider/generic_bloc_provider.dart';
 import 'package:msg_browser/blocs/search_bloc.dart';
 import 'package:msg_browser/widgets/image_tile.dart';
 import 'package:msg_browser/api/models/post_list_item.dart';
@@ -18,7 +19,7 @@ class SearchPageState extends State<SearchPage> {
   AppBar _buildAppBar(BuildContext context) {
     return AppBar(
       title: StreamBuilder<String>(
-        stream: SearchProvider.of(context).tags,
+        stream: BlocProvider.of<SearchBloc>(context).tags,
         builder: (context, snapshot) {
           if (!snapshot.hasData || snapshot.data.isEmpty) {
             return Text("e621");
@@ -44,13 +45,13 @@ class SearchPageState extends State<SearchPage> {
   // The search bar doesn't like the Bloc pattern very much,
   // we have to wrap the sink in this method or it won't work.
   _setTags(String _tags) {
-    SearchProvider.of(context).search.add(_tags);
+    BlocProvider.of<SearchBloc>(context).search.add(_tags);
   }
 
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    SearchBloc searchProvider = SearchProvider.of(context);
+    SearchBloc searchProvider = BlocProvider.of<SearchBloc>(context);
     return Scaffold(
       drawer: Drawer(
         child: Container(
