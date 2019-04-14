@@ -15,6 +15,7 @@ class E621App extends StatelessWidget {
       child: BlocProvider(
         bloc: SearchBloc(),
         child: MaterialApp(
+          title: "SeaSalt",
           home: SearchPage(),
           theme: ThemeData(
             brightness: Brightness.dark,
