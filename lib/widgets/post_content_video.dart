@@ -45,22 +45,23 @@ class _PostContentVideoState extends State<PostContentVideo> {
         widget.post.width;
 
     return Container(
-        color: Pigment.fromString("#284a81"),
-        // TODO: Hero tags are broken on Chewie, put one here
-        // when it gets fixed.
-        child: Stack(
-          children: <Widget>[
-            TransitionToImage(
-              fit: BoxFit.cover,
-              enableRefresh: true,
-              height: height,
-              image: AdvancedNetworkImage(
-                widget.post.previewUrl,
-                useDiskCache: true,
-              ),
+      color: Pigment.fromString("#284a81"),
+      // TODO: Hero tags are broken on Chewie, put one here
+      // when it gets fixed.
+      child: Stack(
+        children: <Widget>[
+          TransitionToImage(
+            fit: BoxFit.cover,
+            enableRefresh: true,
+            height: height,
+            image: AdvancedNetworkImage(
+              widget.post.previewUrl,
+              useDiskCache: true,
             ),
-            Chewie(controller: _chewieController),
-          ],
-        ));
+          ),
+          Chewie(controller: _chewieController),
+        ],
+      ),
+    );
   }
 }
