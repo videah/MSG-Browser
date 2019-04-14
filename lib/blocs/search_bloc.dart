@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'package:generic_bloc_provider/generic_bloc_provider.dart';
 import 'package:msg_browser/api/api.dart';
 import 'package:rxdart/rxdart.dart';
@@ -31,15 +32,19 @@ class SearchBloc extends Bloc {
       var decoded = json.decode(response.body);
 
       List<PostListItem> posts =
-      (decoded as List).map((i) => PostListItem.fromJson(i)).toList();
+          (decoded as List).map((i) => PostListItem.fromJson(i)).toList();
       _items = _stripFlashPosts(posts);
       if (_items.isEmpty) {
-        _itemsSubject.addError("No posts matched your search.");
+        _itemsSubject.addError("No posts matched your search");
       } else {
         _itemsSubject.add(_items);
       }
-    } catch(e) {
-      _itemsSubject.addError("Unknown Error");
+    } catch (e) {
+      if (e is SocketException) {
+        _itemsSubject.addError("Could not connect to e621");
+      } else {
+        _itemsSubject.addError("An unknown error occured");
+      }
     }
   }
 
