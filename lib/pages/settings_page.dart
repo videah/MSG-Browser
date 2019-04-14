@@ -39,7 +39,7 @@ class _SettingsPageState extends State<SettingsPage> {
                   streamed: bloc.cacheSize,
                   builder: (context, snapshot) {
                     return Text(
-                      "Flushes all images from the cache (${snapshot.data} Mb)",
+                      "Flushes all images from the cache (${snapshot.data} MB)",
                     );
                   },
                 ),
