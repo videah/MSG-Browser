@@ -16,6 +16,7 @@ class _SettingsPageState extends State<SettingsPage> {
     return Scaffold(
       backgroundColor: Theme.of(context).canvasColor,
       appBar: AppBar(
+        elevation: 0.0,
         title: Text("Settings"),
       ),
       body: PersistedStateBuilder(
