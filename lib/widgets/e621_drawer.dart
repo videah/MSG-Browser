@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:generic_bloc_provider/generic_bloc_provider.dart';
 import 'package:msg_browser/blocs/settings_bloc.dart';
+import 'package:msg_browser/pages/home_page.dart';
 import 'package:msg_browser/pages/settings_page.dart';
 import 'package:pigment/pigment.dart';
 
@@ -17,6 +18,15 @@ class E621Drawer extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Pigment.fromString("#152f56"),
               ),
+            ),
+            ListTile(
+              title: Text("Home"),
+              leading: Icon(Icons.home),
+              onTap: () {
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => HomePage())
+                );
+              },
             ),
             ListTile(
               title: Text("Settings"),
