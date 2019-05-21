@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_advanced_networkimage/provider.dart';
-import 'package:flutter_advanced_networkimage/transition.dart';
 import 'package:msg_browser/api/models/post_list_item.dart';
 import 'package:msg_browser/widgets/post_action_button.dart';
+import 'package:msg_browser/widgets/post_content_image.dart';
 import 'package:msg_browser/widgets/post_download_button.dart';
+import 'package:msg_browser/widgets/post_high_quality_button.dart';
 import 'package:photo_view/photo_view.dart';
 
 class ImageViewerPage extends StatelessWidget {
@@ -22,6 +22,9 @@ class ImageViewerPage extends StatelessWidget {
         elevation: 0.0,
         title: Text("Image"),
         actions: <Widget>[
+          if (post.fileExt != "webm") ...[
+            PostHighQualityButton(),
+          ],
           PostDownloadButton(
             post: post,
           ),
@@ -39,17 +42,7 @@ class ImageViewerPage extends StatelessWidget {
           initialScale: scale > 1.0 ? 1.0 : scale,
           minScale: 0.7,
           maxScale: 8.0,
-          child: Hero(
-            tag: post.md5,
-            child: TransitionToImage(
-              fit: BoxFit.cover,
-              enableRefresh: true,
-              image: AdvancedNetworkImage(
-                post.sampleUrl,
-                useDiskCache: true,
-              ),
-            ),
-          ),
+          child: PostContentImage(post: post, isViewingImage: true)
         ),
       ),
     );

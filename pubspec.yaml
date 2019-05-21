@@ -10,7 +10,7 @@ description: Browsing app for *that* image board site.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.2.2 <3.0.0"
 
 dependencies:
   flutter:
@@ -21,7 +21,7 @@ dependencies:
   rxdart: ^0.21.0
   pigment: ^1.0.3
   chewie: ^0.9.7
-  photo_view: ^0.2.4
+  photo_view: ^0.3.3
   flutter_advanced_networkimage: ^0.5.0-alpha.3
   generic_bloc_provider: ^1.0.8
   frideos: ^0.6.1

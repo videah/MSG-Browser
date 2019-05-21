@@ -9,9 +9,16 @@ import 'package:generic_bloc_provider/generic_bloc_provider.dart';
 class PostBloc extends Bloc {
   final client = E621Client();
   List<PostTag> _tags;
+  bool _showHighQuality = false;
 
   PostBloc(post) {
     _handleTags(post);
+    _highQualityController.stream.listen(_handleHighQuality);
+  }
+
+  _handleHighQuality(_) async {
+    _showHighQuality = !_showHighQuality;
+    _highQualitySubject.add(_showHighQuality);
   }
 
   _handleTags(PostListItem post) async {
@@ -26,7 +33,15 @@ class PostBloc extends Bloc {
   final _tagSubject = BehaviorSubject<List<PostTag>>();
   Stream<List<PostTag>> get tags => _tagSubject.stream;
 
+  final _highQualitySubject = BehaviorSubject<bool>();
+  Stream<bool> get highQuality => _highQualitySubject.stream;
+
+  final _highQualityController = StreamController<bool>();
+  Sink<bool> get toggleHighQuality => _highQualityController.sink;
+
   void dispose() {
     _tagSubject.close();
+    _highQualitySubject.close();
+    _highQualityController.close();
   }
 }

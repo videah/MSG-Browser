@@ -7,6 +7,7 @@ import 'package:msg_browser/widgets/post_action_button.dart';
 import 'package:msg_browser/widgets/post_content_image.dart';
 import 'package:msg_browser/widgets/post_content_video.dart';
 import 'package:msg_browser/widgets/post_download_button.dart';
+import 'package:msg_browser/widgets/post_high_quality_button.dart';
 import 'package:msg_browser/widgets/tag_panel.dart';
 import 'package:smart_text_view/smart_text_view.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -23,6 +24,9 @@ class PostPage extends StatelessWidget {
       appBar: AppBar(
         title: Text("Post"),
         actions: <Widget>[
+          if (post.fileExt != "webm") ...[
+            PostHighQualityButton(),
+          ],
           PostDownloadButton(
             post: post,
           ),
