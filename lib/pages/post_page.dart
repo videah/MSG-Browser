@@ -43,23 +43,24 @@ class PostPage extends StatelessWidget {
                 ? PostContentVideo(post: post)
                 : PostContentImage(post: post),
           ),
-          post.description.isNotEmpty
-              ? Card(
-                  color: Pigment.fromString("#284a81"),
-                  child: ExpansionTile(
-                    initiallyExpanded: true,
-                    title: Text("Description"),
-                    children: <Widget>[
-                      Divider(),
-                      ListTile(
-                          title: SmartText(
-                        text: post.description,
-                        onOpen: (url) => launch(url),
-                      ))
-                    ],
-                  ),
-                )
-              : Container(),
+          if (post.description.isNotEmpty) ...[
+            Card(
+              color: Pigment.fromString("#284a81"),
+              child: ExpansionTile(
+                initiallyExpanded: true,
+                title: Text("Description"),
+                children: <Widget>[
+                  Divider(),
+                  ListTile(
+                    title: SmartText(
+                      text: post.description,
+                      onOpen: (url) => launch(url),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ],
           Card(
             color: Pigment.fromString("#284a81"),
             child: ExpansionTile(
