@@ -6,6 +6,7 @@ import 'package:msg_browser/blocs/post_bloc.dart';
 import 'package:msg_browser/widgets/post_action_button.dart';
 import 'package:msg_browser/widgets/post_content_image.dart';
 import 'package:msg_browser/widgets/post_content_video.dart';
+import 'package:msg_browser/widgets/post_download_button.dart';
 import 'package:msg_browser/widgets/tag_panel.dart';
 import 'package:smart_text_view/smart_text_view.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -22,6 +23,9 @@ class PostPage extends StatelessWidget {
       appBar: AppBar(
         title: Text("Post"),
         actions: <Widget>[
+          PostDownloadButton(
+            post: post,
+          ),
           PostActionButton(
             post: post,
           )
@@ -44,11 +48,10 @@ class PostPage extends StatelessWidget {
                     children: <Widget>[
                       Divider(),
                       ListTile(
-                        title: SmartText(
-                          text: post.description,
-                          onOpen: (url) => launch(url),
-                        )
-                      )
+                          title: SmartText(
+                        text: post.description,
+                        onOpen: (url) => launch(url),
+                      ))
                     ],
                   ),
                 )
