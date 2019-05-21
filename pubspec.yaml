@@ -22,7 +22,7 @@ dependencies:
   pigment: ^1.0.3
   chewie: ^0.9.7
   photo_view: ^0.2.4
-  flutter_advanced_networkimage: ^0.4.15
+  flutter_advanced_networkimage: ^0.5.0-alpha.3
   generic_bloc_provider: ^1.0.8
   frideos: ^0.6.1
   smart_text_view: ^0.1.0
