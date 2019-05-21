@@ -22,7 +22,7 @@ class ImageViewerPage extends StatelessWidget {
         elevation: 0.0,
         title: Text("Image"),
         actions: <Widget>[
-          if (post.fileExt != "webm") ...[
+          if (post.fileExt != "webm" && post.fileExt != "gif") ...[
             PostHighQualityButton(),
           ],
           PostDownloadButton(

@@ -24,7 +24,7 @@ class PostPage extends StatelessWidget {
       appBar: AppBar(
         title: Text("Post"),
         actions: <Widget>[
-          if (post.fileExt != "webm") ...[
+          if (post.fileExt != "webm" && post.fileExt != "gif") ...[
             PostHighQualityButton(),
           ],
           PostDownloadButton(
