@@ -68,25 +68,25 @@ class PostContentImage extends StatelessWidget {
               },
             ),
           ),
-          Positioned.fill(
-            child: Material(
-              color: Colors.transparent,
-              child: InkWell(
-                onTap: () {
-                  if (!isViewingImage) {
+          if (!isViewingImage) ...[
+            Positioned.fill(
+              child: Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) => BlocProvider(
-                          bloc: PostBloc(post),
-                          child: ImageViewerPage(post: post),
-                        ),
+                              bloc: PostBloc(post),
+                              child: ImageViewerPage(post: post),
+                            ),
                       ),
                     );
-                  }
-                },
+                  },
+                ),
               ),
-            ),
-          )
+            )
+          ]
         ],
       ),
     );
