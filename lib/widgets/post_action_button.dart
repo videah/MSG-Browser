@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:msg_browser/api/models/post_list_item.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class _Choice {
   final String value;
@@ -13,7 +14,8 @@ class PostActionButton extends StatelessWidget {
   final PostListItem post;
   static const List<_Choice> choices = [
     _Choice("copy_post", "Copy Post URL"),
-    _Choice("copy_image", "Copy Image URL")
+    _Choice("copy_image", "Copy Image URL"),
+    _Choice("open_in_browser", "Open In Browser"),
   ];
 
   const PostActionButton({Key key, @required this.post}) : super(key: key);
@@ -59,6 +61,10 @@ class PostActionButton extends StatelessWidget {
               );
             }
             break;
+          case "open_in_browser":
+            {
+              launch("https://e621.net/post/show/${post.id}");
+            }
         }
       },
       itemBuilder: (context) {
