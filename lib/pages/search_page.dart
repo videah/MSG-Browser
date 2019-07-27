@@ -6,7 +6,6 @@ import 'package:msg_browser/widgets/e621_drawer.dart';
 import 'package:msg_browser/widgets/error_message.dart';
 import 'package:msg_browser/widgets/image_tile.dart';
 import 'package:msg_browser/api/models/post_list_item.dart';
-import 'package:state_persistence/state_persistence.dart';
 
 class SearchPage extends StatefulWidget {
   @override
@@ -63,38 +62,33 @@ class SearchPageState extends State<SearchPage> {
             child: CircularProgressIndicator(),
           );
           var items = snapshot.data;
-          return PersistedStateBuilder(
-            builder: (context, storage) {
-              if (!snapshot.hasData) return Container();
-              return RefreshIndicator(
-                onRefresh: searchProvider.refresh,
-                child: GridView.builder(
-                  itemCount: items.length + 1,
-                  padding: EdgeInsets.all(8.0),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: screenWidth ~/ 175,
-                  ),
-                  itemBuilder: (context, i) {
-                    if (i < items.length) {
-                      return Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: ImageTile(
-                          post: items[i],
-                          idgaf: storage.data["idgaf"] ?? false,
-                        ),
-                      );
-                    } else if (searchProvider.noMorePages) {
-                      return Container();
-                    } else {
-                      searchProvider.loadMore.add(items.last.id);
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
-                  },
-                ),
-              );
-            }
+          return RefreshIndicator(
+            onRefresh: searchProvider.refresh,
+            child: GridView.builder(
+              itemCount: items.length + 1,
+              padding: EdgeInsets.all(8.0),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: screenWidth ~/ 175,
+              ),
+              itemBuilder: (context, i) {
+                if (i < items.length) {
+                  return Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: ImageTile(
+                      post: items[i],
+                      idgaf: false, // TODO: reimplement idgaf
+                    ),
+                  );
+                } else if (searchProvider.noMorePages) {
+                  return Container();
+                } else {
+                  searchProvider.loadMore.add(items.last.id);
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+              },
+            ),
           );
         },
       ),
