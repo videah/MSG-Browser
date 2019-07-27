@@ -50,12 +50,11 @@ class SearchBloc extends Bloc {
 
   Future _handleLoadMore(int id) async {
     if (!noMorePages) {
-      var response = await client.get(
-        "https://e621.net/post/index.json?tags=$_tags&before_id=$id",
-      );
-      print("https://e621.net/post/index.json?tags=$_tags&before_id=$id");
+      var url = _tags.contains("order:random")
+          ? "https://e621.net/post/index.json?tags=$_tags"
+          : "https://e621.net/post/index.json?tags=$_tags&before_id=$id";
+      var response = await client.get(url);
       var decoded = json.decode(response.body);
-
       List<PostListItem> posts =
           (decoded as List).map((i) => PostListItem.fromJson(i)).toList();
       // If there's nothing then we've hit a dead end and should stop loading.
