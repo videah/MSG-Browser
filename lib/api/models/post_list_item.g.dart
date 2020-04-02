@@ -8,87 +8,80 @@ part of 'post_list_item.dart';
 
 CreatedAt _$CreatedAtFromJson(Map<String, dynamic> json) {
   return CreatedAt(
-      json['json_class'] as String, json['s'] as int, json['n'] as int);
+    json['json_class'] as String,
+    json['s'] as int,
+    json['n'] as int,
+  );
 }
 
 Map<String, dynamic> _$CreatedAtToJson(CreatedAt instance) => <String, dynamic>{
       'json_class': instance.jsonClass,
       's': instance.s,
-      'n': instance.n
+      'n': instance.n,
     };
 
 PostListItem _$PostListItemFromJson(Map<String, dynamic> json) {
   return PostListItem(
-      json['id'] as int,
-      json['tags'] as String,
-      json['locked_tags'] as String,
-      json['description'] as String,
-      json['created_at'] == null
-          ? null
-          : CreatedAt.fromJson(json['created_at'] as Map<String, dynamic>),
-      json['creator_id'] as int,
-      json['author'] as String,
-      json['change'] as int,
-      json['source'] as String,
-      json['score'] as int,
-      json['fav_count'] as int,
-      json['md5'] as String,
-      json['file_size'] as int,
-      json['file_url'] as String,
-      json['file_ext'] as String,
-      json['preview_url'] as String,
-      json['preview_width'] as int,
-      json['preview_height'] as int,
-      json['sample_url'] as String,
-      json['sample_width'] as int,
-      json['sample_height'] as int,
-      json['rating'] as String,
-      json['status'] as String,
-      json['width'] as int,
-      json['height'] as int,
-      json['has_comments'] as bool,
-      json['has_notes'] as bool,
-      json['has_children'] as bool,
-      json['children'] as String,
-      json['parent_id'] as int,
-      (json['artist'] as List)?.map((e) => e as String)?.toList(),
-      (json['sources'] as List)?.map((e) => e as String)?.toList(),
-      json['delreason'] as String);
+    json['id'] as int,
+    json['created_at'] as String,
+    json['updated_at'] as String,
+    json['file'] == null
+        ? null
+        : PostFile.fromJson(json['file'] as Map<String, dynamic>),
+    json['preview'] == null
+        ? null
+        : PostPreview.fromJson(json['preview'] as Map<String, dynamic>),
+    json['sample'] == null
+        ? null
+        : PostSample.fromJson(json['sample'] as Map<String, dynamic>),
+    json['score'] == null
+        ? null
+        : PostScore.fromJson(json['score'] as Map<String, dynamic>),
+    json['tags'] == null
+        ? null
+        : PostTags.fromJson(json['tags'] as Map<String, dynamic>),
+    (json['lockedTags'] as List)?.map((e) => e as String)?.toList(),
+    json['change_seq'] as int,
+    json['flags'] == null
+        ? null
+        : PostFlags.fromJson(json['flags'] as Map<String, dynamic>),
+    json['rating'] as String,
+    json['fav_count'] as int,
+    (json['sources'] as List)?.map((e) => e as String)?.toList(),
+    json['pools'] as List,
+    json['relationships'] == null
+        ? null
+        : PostRelationship.fromJson(
+            json['relationships'] as Map<String, dynamic>),
+    json['approver_id'] as int,
+    json['uploader_id'] as int,
+    json['description'] as String,
+    json['comment_count'] as int,
+    json['is_favorited'] as bool,
+  );
 }
 
 Map<String, dynamic> _$PostListItemToJson(PostListItem instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'tags': instance.tags,
-      'locked_tags': instance.lockedTags,
-      'description': instance.description,
       'created_at': instance.createdAt,
-      'creator_id': instance.creatorId,
-      'author': instance.author,
-      'change': instance.change,
-      'source': instance.source,
+      'updated_at': instance.updatedAt,
+      'file': instance.file,
+      'preview': instance.preview,
+      'sample': instance.sample,
       'score': instance.score,
-      'fav_count': instance.favCount,
-      'md5': instance.md5,
-      'file_size': instance.fileSize,
-      'file_url': instance.fileUrl,
-      'file_ext': instance.fileExt,
-      'preview_url': instance.previewUrl,
-      'preview_width': instance.previewWidth,
-      'preview_height': instance.previewHeight,
-      'sample_url': instance.sampleUrl,
-      'sample_width': instance.sampleWidth,
-      'sample_height': instance.sampleHeight,
+      'tags': instance.tags,
+      'lockedTags': instance.lockedTags,
+      'change_seq': instance.changeSeq,
+      'flags': instance.flags,
       'rating': instance.rating,
-      'status': instance.status,
-      'width': instance.width,
-      'height': instance.height,
-      'has_comments': instance.hasComments,
-      'has_notes': instance.hasNotes,
-      'has_children': instance.hasChildren,
-      'children': instance.children,
-      'parent_id': instance.parentId,
-      'artist': instance.artist,
+      'fav_count': instance.favCount,
       'sources': instance.sources,
-      'delreason': instance.delreason
+      'pools': instance.pools,
+      'relationships': instance.relationships,
+      'approver_id': instance.approverId,
+      'uploader_id': instance.uploaderId,
+      'description': instance.description,
+      'comment_count': instance.commentCount,
+      'is_favorited': instance.isFavorited,
     };

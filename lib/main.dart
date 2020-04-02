@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:generic_bloc_provider/generic_bloc_provider.dart';
 import 'package:msg_browser/blocs/search_bloc.dart';
-import 'package:msg_browser/pages/home_page.dart';
+import 'package:msg_browser/pages/search_page.dart';
 import 'package:state_persistence/state_persistence.dart';
 import 'package:pigment/pigment.dart';
 
@@ -16,7 +16,7 @@ class E621App extends StatelessWidget {
         bloc: SearchBloc(),
         child: MaterialApp(
           title: "SeaSalt",
-          home: HomePage(),
+          home: SearchPage(),
           theme: ThemeData(
             brightness: Brightness.dark,
             primaryColor: Pigment.fromString("#012e57"),

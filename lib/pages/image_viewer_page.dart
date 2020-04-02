@@ -13,7 +13,7 @@ class ImageViewerPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var height = post.height * MediaQuery.of(context).size.width / post.width;
+    var height = post.file.height * MediaQuery.of(context).size.width / post.file.width;
     var scale = MediaQuery.of(context).size.height / (height + 80);
     return Scaffold(
       backgroundColor: Colors.black,
@@ -22,7 +22,7 @@ class ImageViewerPage extends StatelessWidget {
         elevation: 0.0,
         title: Text("Image"),
         actions: <Widget>[
-          if (post.fileExt != "webm" && post.fileExt != "gif") ...[
+          if (post.file.extension != "webm" && post.file.extension != "gif") ...[
             PostHighQualityButton(),
           ],
           PostDownloadButton(
@@ -37,7 +37,7 @@ class ImageViewerPage extends StatelessWidget {
         child: PhotoView.customChild(
           childSize: Size(
             MediaQuery.of(context).size.width,
-            post.height * MediaQuery.of(context).size.width / post.width,
+            post.file.height * MediaQuery.of(context).size.width / post.file.height,
           ),
           initialScale: scale > 1.0 ? 1.0 : scale,
           minScale: 0.7,

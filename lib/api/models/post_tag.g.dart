@@ -7,13 +7,17 @@ part of 'post_tag.dart';
 // **************************************************************************
 
 PostTag _$PostTagFromJson(Map<String, dynamic> json) {
-  return PostTag(json['id'] as int, json['name'] as String, json['type'] as int,
-      json['type_locked'] as bool);
+  return PostTag(
+    json['id'] as int,
+    json['name'] as String,
+    json['type'] as int,
+    json['type_locked'] as bool,
+  );
 }
 
 Map<String, dynamic> _$PostTagToJson(PostTag instance) => <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'type': instance.type,
-      'type_locked': instance.typeLocked
+      'type_locked': instance.typeLocked,
     };

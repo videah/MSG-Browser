@@ -80,7 +80,7 @@ class SearchPageState extends State<SearchPage> {
                         padding: const EdgeInsets.all(4.0),
                         child: ImageTile(
                           post: items[i],
-                          idgaf: storage.data["idgaf"] ?? false,
+                          idgaf: false,
                         ),
                       );
                     } else if (searchProvider.noMorePages) {

@@ -40,13 +40,13 @@ class ImageTile extends StatelessWidget {
         ? Pigment.fromString("#e45f5f")
         : post.rating == "q" ? Pigment.fromString("#e4e150") : Colors.white;
 
-    Color _scoreColor = post.score > 0
+    Color _scoreColor = post.score.total > 0
         ? Pigment.fromString("#3e9e49")
-        : post.score < 0 ? Pigment.fromString("#e45f5f") : Colors.white;
+        : post.score.total < 0 ? Pigment.fromString("#e45f5f") : Colors.white;
 
-    Color _borderColor = post.hasChildren
+    Color _borderColor = post.relationships.hasChildren
         ? Pigment.fromString("#0f0")
-        : post.parentId != null
+        : post.relationships.parentId != null
             ? Pigment.fromString("#cc0")
             : Pigment.fromString("#284a81");
 
@@ -62,15 +62,14 @@ class ImageTile extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(4.0),
                   child: Container(
-                    width: post.width.toDouble(),
+                    width: post.file.width.toDouble(),
                     color: Pigment.fromString("#284a81"),
                     child: Hero(
-                      tag: "${post.md5}/thumb",
+                      tag: "${post.file.md5}/thumb",
                       child: TransitionToImage(
                         fit: BoxFit.cover,
                         image: AdvancedNetworkImage(
-                          post.previewUrl,
-                          useDiskCache: true,
+                          post.preview.url,
                         ),
                       ),
                     ),
@@ -86,13 +85,13 @@ class ImageTile extends StatelessWidget {
                     children: <Widget>[
                       Row(
                         children: <Widget>[
-                          post.score > 0
+                          post.score.total > 0
                               ? Icon(
                                   Icons.arrow_upward,
                                   size: 14.0,
                                   color: _scoreColor,
                                 )
-                              : post.score < 0
+                              : post.score.total < 0
                                   ? Icon(
                                       Icons.arrow_downward,
                                       size: 14.0,
@@ -104,7 +103,7 @@ class ImageTile extends StatelessWidget {
                                       color: _scoreColor,
                                     ),
                           Text(
-                            " ${post.score}",
+                            " ${post.score.total}",
                             style: TextStyle(color: _scoreColor),
                           ),
                         ],
@@ -129,7 +128,7 @@ class ImageTile extends StatelessWidget {
               ),
             ],
           ),
-          post.fileExt == "webm"
+          post.file.extension == "webm"
               ? _tileIcon(
                   Icon(
                     Icons.ondemand_video,
@@ -137,7 +136,7 @@ class ImageTile extends StatelessWidget {
                   ),
                 )
               : Container(),
-          post.fileExt == "gif"
+          post.file.extension == "gif"
               ? _tileIcon(
                   Icon(
                     Icons.gif,

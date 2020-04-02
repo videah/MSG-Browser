@@ -21,10 +21,10 @@ class _PostContentVideoState extends State<PostContentVideo> {
 
   @override
   void initState() {
-    _playerController = VideoPlayerController.network("${widget.post.fileUrl}");
+    _playerController = VideoPlayerController.network("${widget.post.file.url}");
     _chewieController = ChewieController(
       videoPlayerController: _playerController,
-      aspectRatio: widget.post.width / widget.post.height,
+      aspectRatio: widget.post.file.width / widget.post.file.height,
       autoPlay: true,
       looping: false,
     );
@@ -40,9 +40,9 @@ class _PostContentVideoState extends State<PostContentVideo> {
 
   @override
   Widget build(BuildContext context) {
-    var height = widget.post.height *
+    var height = widget.post.file.height *
         MediaQuery.of(context).size.width /
-        widget.post.width;
+        widget.post.file.width;
 
     return Container(
       color: Pigment.fromString("#284a81"),
@@ -51,13 +51,13 @@ class _PostContentVideoState extends State<PostContentVideo> {
       child: Stack(
         children: <Widget>[
           Hero(
-            tag: "${widget.post.md5}/thumb",
+            tag: "${widget.post.file.md5}/thumb",
             child: TransitionToImage(
               fit: BoxFit.cover,
               enableRefresh: true,
               height: height,
               image: AdvancedNetworkImage(
-                widget.post.previewUrl,
+                widget.post.preview.url,
                 useDiskCache: true,
               ),
             ),

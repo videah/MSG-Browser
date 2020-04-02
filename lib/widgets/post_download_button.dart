@@ -31,14 +31,14 @@ class PostDownloadButton extends StatelessWidget {
       SnackBar(
         content: ListTile(
           title: Text("Downloading file to gallery"),
-          subtitle: Text("${post.fileUrl}"),
+          subtitle: Text("${post.file.url}"),
           trailing: Icon(Icons.file_download),
         ),
       ),
     );
 
     FlutterDownloader.enqueue(
-      url: post.fileUrl,
+      url: post.file.url,
       savedDir: _localPath,
       showNotification: true,
       openFileFromNotification: true,

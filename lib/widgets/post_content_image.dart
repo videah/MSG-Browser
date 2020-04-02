@@ -16,7 +16,7 @@ class PostContentImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var height = post.height * MediaQuery.of(context).size.width / post.width;
+    var height = post.file.height * MediaQuery.of(context).size.width / post.file.width;
     var bloc = BlocProvider.of<PostBloc>(context);
     return Container(
       color: Pigment.fromString("#284a81"),
@@ -24,31 +24,29 @@ class PostContentImage extends StatelessWidget {
       child: Stack(
         children: <Widget>[
           Hero(
-            tag: "${post.md5}/thumb",
+            tag: "${post.file.md5}/thumb",
             child: TransitionToImage(
               fit: BoxFit.cover,
               height: height,
               enableRefresh: true,
               image: AdvancedNetworkImage(
-                post.previewUrl,
-                useDiskCache: true,
+                post.preview.url,
               ),
             ),
           ),
           Hero(
-            tag: "${post.md5}/preview",
+            tag: "${post.file.md5}/preview",
             child: TransitionToImage(
               fit: BoxFit.cover,
               height: height,
               enableRefresh: true,
               image: AdvancedNetworkImage(
-                post.sampleUrl,
-                useDiskCache: true,
+                post.sample.url,
               ),
             ),
           ),
           Hero(
-            tag: "${post.md5}/hq",
+            tag: "${post.file.md5}/hq",
             child: StreamBuilder(
               stream: bloc.highQuality,
               builder: (context, snapshot) {
@@ -58,8 +56,7 @@ class PostContentImage extends StatelessWidget {
                     height: height,
                     enableRefresh: true,
                     image: AdvancedNetworkImage(
-                      post.fileUrl,
-                      useDiskCache: true,
+                      post.file.url,
                     ),
                   );
                 } else {

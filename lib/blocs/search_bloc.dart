@@ -15,7 +15,7 @@ class SearchBloc extends Bloc {
   // Flash is a dead meme.
   // TODO: maybe do this in the search query instead
   _stripFlashPosts(List<PostListItem> posts) {
-    posts.removeWhere((f) => f.fileExt == "swf");
+    posts.removeWhere((f) => f.file.extension == "swf");
     return posts;
   }
 
@@ -27,12 +27,12 @@ class SearchBloc extends Bloc {
       _searchSubject.add(_tags);
 
       var response = await client.get(
-        "https://e621.net/post/index.json?tags=$_tags",
+        "https://e621.net/posts.json?tags=$_tags",
       );
       var decoded = json.decode(response.body);
 
       List<PostListItem> posts =
-          (decoded as List).map((i) => PostListItem.fromJson(i)).toList();
+          (decoded["posts"] as List).map((i) => PostListItem.fromJson(i)).toList();
       _items = _stripFlashPosts(posts);
       if (_items.isEmpty) {
         _itemsSubject.addError("No posts matched your search");
@@ -43,6 +43,7 @@ class SearchBloc extends Bloc {
       if (e is SocketException) {
         _itemsSubject.addError("Could not connect to e621");
       } else {
+        print(e);
         _itemsSubject.addError("An unknown error occured");
       }
     }

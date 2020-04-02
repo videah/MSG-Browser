@@ -27,7 +27,7 @@ class PostActionButton extends StatelessWidget {
     );
 
     var imageUrl = ClipboardData(
-      text: "${post.fileUrl}",
+      text: "${post.file.url}",
     );
 
     return PopupMenuButton<_Choice>(
@@ -55,7 +55,7 @@ class PostActionButton extends StatelessWidget {
                   content: ListTile(
                     trailing: Icon(Icons.content_copy),
                     title: Text("Image URL copied to clipboard."),
-                    subtitle: Text("${post.fileUrl}"),
+                    subtitle: Text("${post.file.url}"),
                   ),
                 ),
               );
