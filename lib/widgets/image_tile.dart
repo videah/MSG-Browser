@@ -6,6 +6,7 @@ import 'package:msg_browser/api/models/post_list_item.dart';
 import 'package:msg_browser/blocs/post_bloc.dart';
 import 'package:msg_browser/pages/image_viewer_page.dart';
 import 'package:msg_browser/pages/post_page.dart';
+import 'package:flutter_conditional_rendering/conditional.dart';
 import 'package:pigment/pigment.dart';
 
 class ImageTile extends StatelessWidget {
@@ -64,13 +65,20 @@ class ImageTile extends StatelessWidget {
                   child: Container(
                     width: post.file.width.toDouble(),
                     color: Pigment.fromString("#284a81"),
-                    child: Hero(
-                      tag: "${post.file.md5}/thumb",
-                      child: TransitionToImage(
-                        fit: BoxFit.cover,
-                        image: AdvancedNetworkImage(
-                          post.preview.url,
+                    child: Conditional.single(
+                      context: context,
+                      conditionBuilder: (context) => post.preview.url != null,
+                      widgetBuilder: (context) => Hero(
+                        tag: "${post.file.md5}/thumb",
+                        child: TransitionToImage(
+                          fit: BoxFit.cover,
+                          image: AdvancedNetworkImage(
+                            post.preview.url,
+                          ),
                         ),
+                      ),
+                      fallbackBuilder: (context) => Center(
+                        child: Text("No Thumbnail"),
                       ),
                     ),
                   ),

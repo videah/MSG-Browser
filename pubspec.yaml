@@ -30,6 +30,7 @@ dependencies:
   state_persistence: ^0.0.7
   flutter_downloader: ^1.4.2
   permission_handler: ^5.0.0+hotfix.3
+  flutter_conditional_rendering: ^1.1.1
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
