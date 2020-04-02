@@ -26,7 +26,7 @@ class _PostContentVideoState extends State<PostContentVideo> {
       videoPlayerController: _playerController,
       aspectRatio: widget.post.file.width / widget.post.file.height,
       autoPlay: true,
-      looping: false,
+      looping: true,
     );
     super.initState();
   }
