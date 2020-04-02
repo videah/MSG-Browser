@@ -68,6 +68,7 @@ class PostTags {
     this.general,
     this.species,
     this.character,
+    this.copyright,
     this.artist,
     this.invalid,
     this.lore,
@@ -77,6 +78,7 @@ class PostTags {
   final List<String> general;
   final List<String> species;
   final List<String> character;
+  final List<String> copyright;
   final List<String> artist;
   final List<String> invalid;
   final List<String> lore;
