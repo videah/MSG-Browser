@@ -52,9 +52,9 @@ class SearchBloc extends Bloc {
   Future _handleLoadMore(int id) async {
     if (!noMorePages) {
       var response = await client.get(
-        "https://e621.net/post/index.json?tags=$_tags&before_id=$id",
+        "https://e621.net/posts.json?tags=$_tags&page=b$id",
       );
-      print("https://e621.net/post/index.json?tags=$_tags&before_id=$id");
+      print("https://e621.net/posts.json?tags=$_tags&before_id=$id");
       var decoded = json.decode(response.body);
 
       List<PostListItem> posts =
