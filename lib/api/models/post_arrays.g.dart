@@ -10,7 +10,7 @@ PostFile _$PostFileFromJson(Map<String, dynamic> json) {
   return PostFile(
     json['width'] as int,
     json['height'] as int,
-    json['extension'] as String,
+    json['ext'] as String,
     json['size'] as int,
     json['md5'] as String,
     json['url'] as String,
@@ -20,7 +20,7 @@ PostFile _$PostFileFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$PostFileToJson(PostFile instance) => <String, dynamic>{
       'width': instance.width,
       'height': instance.height,
-      'extension': instance.extension,
+      'ext': instance.extension,
       'size': instance.size,
       'md5': instance.md5,
       'url': instance.url,

@@ -15,6 +15,7 @@ class PostFile {
 
   final int width;
   final int height;
+  @JsonKey(name: "ext")
   final String extension;
   final int size;
   final String md5;
