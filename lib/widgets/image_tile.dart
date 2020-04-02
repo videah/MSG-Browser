@@ -65,7 +65,7 @@ class ImageTile extends StatelessWidget {
                     width: post.width.toDouble(),
                     color: Pigment.fromString("#284a81"),
                     child: Hero(
-                      tag: post.md5,
+                      tag: "${post.md5}/thumb",
                       child: TransitionToImage(
                         fit: BoxFit.cover,
                         image: AdvancedNetworkImage(

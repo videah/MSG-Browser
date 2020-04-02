@@ -1,5 +1,5 @@
 import 'package:flutter_advanced_networkimage/provider.dart';
-import 'package:frideos_core/frideos_core.dart';
+import 'package:frideos/frideos.dart';
 import 'package:generic_bloc_provider/generic_bloc_provider.dart';
 
 class SettingsBloc extends Bloc {

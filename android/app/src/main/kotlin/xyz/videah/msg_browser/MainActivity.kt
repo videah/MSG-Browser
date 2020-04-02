@@ -1,4 +1,4 @@
-package xyz.videah.msgbrowser
+package xyz.videah.msg_browser
 
 import io.flutter.embedding.android.FlutterActivity
 

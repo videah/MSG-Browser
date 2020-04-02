@@ -19,16 +19,12 @@ class PostDownloadButton extends StatelessWidget {
 
   void _downloadPostToGallery(BuildContext context) async {
     var _localPath = (await _findLocalPath(context)) + "/Download";
-    var _hasPermission = await PermissionHandler().checkPermissionStatus(
-      PermissionGroup.storage,
-    );
+    var _hasPermission = await Permission.storage.status;
 
     // We need to make sure we have permission to store the downloaded file.
-    if (_hasPermission != PermissionStatus.granted) {
-      var _permission = await PermissionHandler().requestPermissions(
-        [PermissionGroup.storage],
-      );
-      if (_permission[PermissionGroup.storage] != PermissionStatus.granted) return;
+    if (_hasPermission.isUndetermined) {
+      var _permission = await Permission.storage.request();
+      if (_permission.isUndetermined) return;
     }
 
     Scaffold.of(context).showSnackBar(

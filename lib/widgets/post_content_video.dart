@@ -50,13 +50,16 @@ class _PostContentVideoState extends State<PostContentVideo> {
       // when it gets fixed.
       child: Stack(
         children: <Widget>[
-          TransitionToImage(
-            fit: BoxFit.cover,
-            enableRefresh: true,
-            height: height,
-            image: AdvancedNetworkImage(
-              widget.post.previewUrl,
-              useDiskCache: true,
+          Hero(
+            tag: "${widget.post.md5}/thumb",
+            child: TransitionToImage(
+              fit: BoxFit.cover,
+              enableRefresh: true,
+              height: height,
+              image: AdvancedNetworkImage(
+                widget.post.previewUrl,
+                useDiskCache: true,
+              ),
             ),
           ),
           Chewie(controller: _chewieController),
