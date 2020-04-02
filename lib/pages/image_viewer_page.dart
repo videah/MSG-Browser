@@ -37,7 +37,7 @@ class ImageViewerPage extends StatelessWidget {
         child: PhotoView.customChild(
           childSize: Size(
             MediaQuery.of(context).size.width,
-            post.file.height * MediaQuery.of(context).size.width / post.file.height,
+            post.file.height * MediaQuery.of(context).size.width / post.file.width,
           ),
           initialScale: scale > 1.0 ? 1.0 : scale,
           minScale: 0.7,
